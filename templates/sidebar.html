@@ -1,0 +1,188 @@
+{% load static %}
+
+
+<nav class="sidebar">
+    <div class=" sidebar-header">
+        <h5>Menú Herbario</h5>
+        <button class="toggle-sidebar" id="toggleSidebar">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+    </div>
+
+    <div class="user-info">
+        <div class="user-pic">
+            <img src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+                alt="Usuario" id="userImage">
+        </div>
+        <div>
+            <h6 class="mb-1">Herbario <strong>UJAT</strong></h6>
+            <small class="text-muted">Administrador</small>
+            <div class="user-status">
+                <i class="fa fa-circle me-1"></i>
+                <span>En línea</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-menu-container">
+        <div class="sidebar-search px-3 mb-3">
+            <div class="input-group">
+                <input type="text" class="form-control bg-dark text-white border-0" placeholder="Buscar especie...">
+                <button class="btn btn-success" type="button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+
+        <ul class="sidebar-menu">
+            <li class="menu-title">Navegación</li>
+            <li>
+                <a href="{% url 'home' %}" class="active">
+                    <i class="fa fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+            </li>
+            <li class="nav-item has-submenu">
+                <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#submenuCatalogo">
+                    <i class="fa-solid fa-clipboard"></i>
+                    <span>Catálogo</span>
+                    <!-- <i class="fas fa-angle-down submenu-icon"></i> -->
+                </a>
+                <ul class="submenu collapse" id="submenuCatalogo">
+                    <!-- Primer nivel de submenú -->
+                    <li class="nav-item has-submenu">
+                        <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#submenuFamilia">
+                            <i class="fas fa-seedling me-2"></i>
+                            <span>Tipo</span>
+                            <!-- <i class="fas fa-angle-down submenu-icon"></i> -->
+                        </a>
+                        <!-- Segundo nivel de submenú -->
+                        <ul class="submenu collapse" id="submenuFamilia">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-leaf me-2"></i>
+                                    <span>Planta</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-tree me-2"></i>
+                                    <span>Algas</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-feather-alt me-2"></i>
+                                    <span>Frutos y Semillas</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-feather-alt me-2"></i>
+                                    <span>Polen</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-feather-alt me-2"></i>
+                                    <span>Helecho</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-feather-alt me-2"></i>
+                                    <span>Hongo</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Otros items del primer nivel -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-tree me-2"></i>
+                            <span>Familia</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-tree me-2"></i>
+                            <span>Especie</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-tree me-2"></i>
+                            <span>Genero</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+            <!-- <ul class="sidebar-submenu">
+                <li><a href="#"><i class="fa fa-seedling"></i> Angiospermas</a></li>
+                <li><a href="#"><i class="fa fa-tree"></i> Gimnospermas</a></li>
+                <li><a href="#"><i class="fa fa-feather-alt"></i> Helechos</a></li>
+            </ul> -->
+            </li>
+            <li>
+                <a href="{% url 'presentacion' %}">
+                    <i class="fa fa-search"></i>
+                    <span>Explorar</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'datos' %}">
+                    <i class="fa fa-book"></i>
+                    <span>Catálogo</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-info-circle"></i>
+                    <span>Acerca de</span>
+                </a>
+            </li>
+
+            <li class="menu-title">Administración</li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                    <span>Usuarios</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-cog"></i>
+                    <span>Configuración</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-database"></i>
+                    <span>Base de datos</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="sidebar-footer">
+        <a href="#" class="position-relative text-white">
+            <i class="fa fa-bell"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                3
+            </span>
+        </a>
+        <a href="#" class="position-relative text-white">
+            <i class="fa fa-envelope"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                7
+            </span>
+        </a>
+        <a href="#" class="text-white">
+            <i class="fa fa-power-off"></i>
+        </a>
+    </div>
+</nav>

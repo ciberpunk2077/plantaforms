@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herbario Ujat</title>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/sidebar.css" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Tu CSS personalizado -->
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
+        <div class="container-fluid">
+            <!-- Botón para menú móvil -->
+            <button class="navbar-toggler" type="button" id="mobileToggle">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <a class="navbar-brand mx-auto" href="#">
+                <h1 class="m-0">Herbario Ujat</h1>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class=" sidebar-header">
+            <h5>Menú Herbario</h5>
+            <button class="toggle-sidebar" id="toggleSidebar">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+
+        <div class="user-info">
+            <div class="user-pic">
+                <img src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+                    alt="Usuario" id="userImage">
+            </div>
+            <div>
+                <h6 class="mb-1">Herbario <strong>UJAT</strong></h6>
+                <small class="text-muted">Administrador</small>
+                <div class="user-status">
+                    <i class="fa fa-circle me-1"></i>
+                    <span>En línea</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-menu-container">
+            <div class="sidebar-search px-3 mb-3">
+                <div class="input-group">
+                    <input type="text" class="form-control bg-dark text-white border-0" placeholder="Buscar especie...">
+                    <button class="btn btn-success" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+
+            <ul class="sidebar-menu">
+                <li class="menu-title">Navegación</li>
+                <li>
+                    <a href="#" class="active">
+                        <i class="fa fa-home"></i>
+                        <span>Inicio</span>
+                    </a>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#submenuCatalogo">
+                        <i class="fa-solid fa-clipboard"></i>
+                        <span>Catálogo</span>
+                        <!-- <i class="fas fa-angle-down submenu-icon"></i> -->
+                    </a>
+                    <ul class="submenu collapse" id="submenuCatalogo">
+                        <!-- Primer nivel de submenú -->
+                        <li class="nav-item has-submenu">
+                            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#submenuFamilia">
+                                <i class="fas fa-seedling me-2"></i>
+                                <span>Tipo</span>
+                                <!-- <i class="fas fa-angle-down submenu-icon"></i> -->
+                            </a>
+                            <!-- Segundo nivel de submenú -->
+                            <ul class="submenu collapse" id="submenuFamilia">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <i class="fas fa-leaf me-2"></i>
+                                        <span>Planta</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <i class="fas fa-tree me-2"></i>
+                                        <span>Algas</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <i class="fas fa-feather-alt me-2"></i>
+                                        <span>Frutos y Semillas</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <i class="fas fa-feather-alt me-2"></i>
+                                        <span>Polen</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <i class="fas fa-feather-alt me-2"></i>
+                                        <span>Helecho</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <i class="fas fa-feather-alt me-2"></i>
+                                        <span>Hongo</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Otros items del primer nivel -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-tree me-2"></i>
+                                <span>Familia</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-tree me-2"></i>
+                                <span>Especie</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-tree me-2"></i>
+                                <span>Genero</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+                <!-- <ul class="sidebar-submenu">
+                    <li><a href="#"><i class="fa fa-seedling"></i> Angiospermas</a></li>
+                    <li><a href="#"><i class="fa fa-tree"></i> Gimnospermas</a></li>
+                    <li><a href="#"><i class="fa fa-feather-alt"></i> Helechos</a></li>
+                </ul> -->
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-search"></i>
+                        <span>Explorar</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-book"></i>
+                        <span>Catálogo</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-info-circle"></i>
+                        <span>Acerca de</span>
+                    </a>
+                </li>
+
+                <li class="menu-title">Administración</li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-users"></i>
+                        <span>Usuarios</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-cog"></i>
+                        <span>Configuración</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-database"></i>
+                        <span>Base de datos</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sidebar-footer">
+            <a href="#" class="position-relative text-white">
+                <i class="fa fa-bell"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    3
+                </span>
+            </a>
+            <a href="#" class="position-relative text-white">
+                <i class="fa fa-envelope"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                    7
+                </span>
+            </a>
+            <a href="#" class="text-white">
+                <i class="fa fa-power-off"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main-content" id="mainContent" style="margin-top: 70px;">
+        <div class="container-fluid py-4">
+            <!-- Hero Section -->
+            <div class="hero text-center py-4">
+                <img src="img/logo 5 negro.png" alt="Logo Herbario Ujat" class="hero-logo img-fluid"
+                    style="max-height: 250px;">
+            </div>
+
+            <header class="text-center mb-5">
+                <h1>Bienvenido al Herbario UJAT</h1>
+                <p class="lead text-muted">Explora nuestra colección de especies botánicas de la región</p>
+            </header>
+
+
+
+            <div class="container">
+                <!-- Header Section -->
+                <div class="header-bg text-center">
+                    <h1 class="display-4">Herbario UJAT</h1>
+                    <p class="lead">Universidad Juárez Autónoma de Tabasco</p>
+                </div>
+
+                <!-- Información de colección -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Información de colección</h3>
+                        <div class="card info-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Información del Herbario</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><span class="label">Nombre:</span> Herbario</p>
+                                        <p><span class="label">Siglas:</span> UJAT</p>
+                                        <p><span class="label">Año de fundación:</span> 1985</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><span class="label">Clasificaciones:</span> Alfabético</p>
+                                        <p><span class="label">Áreas:</span> Botánica</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Directorio -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Directorio</h3>
+
+                        <div class="card mb-3">
+                            <div class="card-header bg-light">
+                                <h4 class="mb-0">Investigador-profesor</h4>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Lic. Ma. de los Ángeles Guadarrama Olivera</p>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="card-header bg-light">
+                                <h4 class="mb-0">Personal Activo</h4>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Salome López Casanova</p>
+                                <p class="card-text">P. de Biól. María del Carmen Jesús Garíca</p>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3">
+                            <div class="card-header bg-light">
+                                <h4 class="mb-0">Tecnico académico</h4>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">Nahum Muñiz Chavarría</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cobertura taxonómica -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>COBERTURA TAXONÓMICA</h3>
+                        <div class="card info-card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><span class="label">Reino:</span> Plantae</p>
+                                        <p><span class="label">Phylum:</span> Magnoliophyta, Pteridophyta</p>
+                                        <p><span class="label">Clase:</span> Filicopsida, Liliopsida, Magnoliopsida
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><span class="label">Orden:</span> Arecales, Asparagales, Asterales,
+                                            Fabales, Poales,
+                                            Polypodiales, Solanales</p>
+                                        <p><span class="label">Familia:</span> Arecaceae, Asteraceae, Fabaceae,
+                                            Orchidaceae,
+                                            Poaceae, Solanaceae, Vittariaceae</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ejemplares -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>EJEMPLARES</h3>
+                        <div class="card info-card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><span class="label">Total de ejemplares:</span> 18,906</p>
+                                        <p><span class="label">Porcentaje de confiabilidad:</span> 1%</p>
+                                        <p><span class="label">Ejemplares montados sin etiqueta:</span> 1,200</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><span class="label">Ejemplares determinados:</span> 800</p>
+                                        <p><span class="label">Ejemplares digitalizados:</span> 5,295</p>
+                                        <p><span class="label">Ejemplares públicos:</span> 16,906</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cobertura geográfica -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>COBERTURA GEOGRÁFICA</h3>
+                        <div class="card info-card">
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <strong>México, Tabasco</strong>
+                                        <ol class="mt-2">
+                                            <li>Componente: Lótico superficial.</li>
+                                        </ol>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>México, Tabasco</strong>
+                                        <ol class="mt-2">
+                                            <li>Región: Pacífico Sur y Zona Istmica.</li>
+                                            <li>Ambiente: Dulceacuícola.</li>
+                                            <li>Componente: Necton.</li>
+                                        </ol>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>México, Tabasco</strong>
+                                        <ol class="mt-2">
+                                            <li>Componente: Necton.</li>
+                                        </ol>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>México, Tabasco</strong>
+                                        <ol class="mt-2">
+                                            <li>Región: Pacífico Sur y Zona Istmica.</li>
+                                            <li>Ambiente: Dulceacuícola.</li>
+                                            <li>Componente: Bentos.</li>
+                                        </ol>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </main>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sidebar.js"></script>
+    <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
+
+</body>
+
+</html>

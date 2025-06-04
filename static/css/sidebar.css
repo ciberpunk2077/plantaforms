@@ -1,0 +1,298 @@
+.sidebar {
+    width: 280px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    background: #2c3e50;
+    color: #fff;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 100;
+
+    overflow-y: auto;
+    /* Habilita el scroll vertical */
+    scrollbar-width: thin;
+    /* Para navegadores modernos */
+    scrollbar-color: #34495e #2c3e50;
+    /* Color del scroll */
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #2c3e50;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: #34495e;
+    border-radius: 3px;
+}
+
+/* Ajuste para el modo compacto */
+.sidebar.compact {
+    width: 70px;
+    overflow-y: auto;
+    /* Mantiene scroll en modo compacto */
+}
+
+/* Contenedor del menú con altura calculada */
+.sidebar-menu-container {
+    height: calc(100vh - 250px);
+    /* Ajusta restando altura del header, user-info y footer */
+    overflow-y: auto;
+}
+
+/* Asegura que el footer quede fijo abajo */
+.sidebar-footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background: #2c3e50;
+}
+
+.sidebar.compact {
+    width: 70px;
+    overflow: hidden;
+}
+
+.sidebar.compact .sidebar-header h5,
+.sidebar.compact .user-info>div:not(.user-pic),
+.sidebar.compact .menu-title,
+.sidebar.compact .sidebar-menu li span,
+.sidebar.compact .sidebar-search {
+    display: none;
+}
+
+.sidebar.compact .sidebar-menu li a {
+    padding: 15px 25px;
+    text-align: center;
+}
+
+.sidebar.compact .sidebar-menu li a i {
+    margin-right: 0;
+    font-size: 1.2rem;
+}
+
+.sidebar.compact .user-pic img {
+    width: 40px;
+    height: 40px;
+}
+
+.sidebar.compact .sidebar-footer a span.badge {
+    display: none;
+}
+
+.sidebar-header {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-header .toggle-sidebar {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.sidebar-menu {
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-menu li {
+    position: relative;
+}
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-menu li a:hover,
+.sidebar-menu li a.active {
+    background: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    /* border-left: 3px solid #2ecc71; */
+}
+
+.sidebar-menu li a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-menu .menu-title {
+    padding: 10px 20px;
+    color: #7f8c8d;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-around;
+}
+
+.user-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.user-pic img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 10px;
+    display: block;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.user-pic img:hover {
+    transform: scale(1.05);
+}
+
+.user-status {
+    font-size: 0.8rem;
+    color: #2ecc71;
+}
+
+.sidebar-search {
+    padding: 15px;
+}
+
+/* Estilo para contenido principal */
+.main-content {
+    margin-left: 280px;
+    transition: all 0.3s;
+}
+
+.main-content.compact {
+    margin-left: 70px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 992px) {
+    .sidebar {
+        transform: translateX(-280px);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .sidebar.compact {
+        transform: translateX(-70px);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+/* Estilos para el submenú */
+.sidebar-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding-left: 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-submenu.active {
+    max-height: 500px;
+    /* Ajusta según necesidad */
+}
+
+.sidebar-submenu li a {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-submenu li a i {
+    margin-right: 8px;
+    font-size: 0.8rem;
+}
+
+.sidebar-menu li.has-submenu>a {
+    position: relative;
+}
+
+.sidebar-menu li.has-submenu>a::after {
+    content: '\f078';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 20px;
+    transition: transform 0.3s;
+}
+
+.sidebar-menu li.has-submenu.active>a::after {
+    transform: rotate(180deg);
+}
+
+/* Ajustes para modo compacto */
+.sidebar.compact .sidebar-submenu {
+    display: none;
+}
+
+.sidebar.compact .sidebar-menu li.has-submenu>a::after {
+    display: none;
+}
+
+/* Estilos para submenús anidados */
+.submenu {
+    list-style: none;
+    padding-left: 1rem;
+    margin-top: 0.25rem;
+    /* border-left: 2px solid #2e7d32; */
+    /* Verde para coincidir con tu tema */
+}
+
+.submenu .submenu {
+    padding-left: 1.5rem;
+    /* Mayor indentación para niveles más profundos */
+    border-left-color: #4caf50;
+    /* Verde más claro */
+}
+
+.submenu-icon {
+    float: right;
+    transition: transform 0.3s;
+}
+
+.collapse.show .submenu-icon {
+    transform: rotate(180deg);
+}
+
+.nav-link {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}

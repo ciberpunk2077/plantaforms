@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main class="main-content" id="mainContent" style="margin-top: 70px;">
+    <div class="container-fluid py-4">
+        <!-- Hero Section -->
+        <div class="hero text-center py-4">
+            <img src="{% static  'img/logo 5 negro.png' %}" alt="Logo Herbario Ujat" class="hero-logo img-fluid"
+                style="max-height: 250px;">
+        </div>
+
+        <header class="text-center mb-5">
+            <h1>Bienvenido al Herbario UJAT</h1>
+            <p class="lead text-muted">Explora nuestra colección de especies botánicas de la región</p>
+        </header>
+
+        <div class="container py-5">
+            <!-- Presentación -->
+            <div class="intro-section">
+                <h1 class="display-4 mb-4">Presentación</h1>
+                <p class="lead">Introducción</p>
+            </div>
+
+            <!-- Sección con imagen izquierda -->
+            <div class="row mb-5">
+                <div class="col-md-4">
+                    <img src="{% static  'img/herbario_xal.jpg' %}" alt="Herbario"
+                        class="img-fluid rounded mb-3 mb-md-0 custom-img-left">
+                </div>
+                <div class="col-md-8 text-content">
+                    <p>Los Herbarios, tal y como los ha conceptualizado Rzedowski (1975) y Hernandez X. (1975) son
+                        "museos
+                        de plantas que funcionan como bibliotecas o bancos de información sobre la flora de una
+                        región
+                        geográfica específica".</p>
+                    <p>Estos centros constituyen áreas importantes para dar servicios a investigadores, estudiantes
+                        de todos
+                        niveles educativos y al público en general. Al mismo tiempo, han sido la base de trabajos
+                        botánicos,
+                        preferencialmente los de tipo taxonómico y florístico, así como otros relacionados con la
+                        fitogeografía, palinología, morfológica, genética, etnobotánica y la estadística.</p>
+                </div>
+            </div>
+
+            <div class="text-content mb-5">
+                <p>Además, se considera como un acervo que permite la generación de propuestas relacionadas con el
+                    manejo y
+                    aprovechamiento de los ecosistemas, de las áreas naturales protegidas, en estudios que tienen
+                    hacia la
+                    búsqueda de nuevas alternativas para la alimentación, para la salud y en general para promover
+                    un
+                    desarrollo económico.</p>
+
+                <p>Así mismos, los herbarios pueden resguardar colecciones de diversas índole, esto depende de la
+                    capacidad
+                    de los investigadores que están a su cargo y la institución donde se encuentren. Los hay de tipo
+                    generalista o especializados en algún grupo, algunos ejemplos de México son el de la Asociación
+                    Mexicana
+                    de Orquideologia, el cual tiene la más importante colección de orquídeas herbolizadas del país y
+                    el
+                    instituto mexicano del seguro social, el cual cuenta con la colección más importante de plantas
+                    medicinales; sin embargo la gran mayoría, son de tipos generalistas y desarrollan sus
+                    colecciones en
+                    torno a proyectos florísticos regionales, de manera que podemos encontrar en ellos colecciones
+                    de
+                    plantas superiores, de hongos, de algas, de musgos, de helechos.</p>
+
+                <p>Lo anterior ofrece la posibilidad de conocer y consultar muestras completas de plantas,
+                    debidamente
+                    conservadas e identificadas, hasta parte de ellas, tales como frutos y semillas; muestras de
+                    maderas o
+                    xilotecas, además de otras colecciones especializadas donde se pueden contar, entre otras, a las
+                    de
+                    polen las cuales contribuyen, por ejemplo a la caracterización de posibles enfermedades
+                    alérgicas.</p>
+            </div>
+
+            <!-- Historia -->
+            <h2 class="section-title">Antecedentes (Historia)</h2>
+
+            <!-- Sección con imagen derecha -->
+            <div class="row mb-5">
+                <div class="col-md-8 text-content">
+                    <p>El herbario de la universidad Juárez autónoma de tabasco actualmente está adscrito a la
+                        división
+                        académica de ciencias biológicas en la ciudad de Villahermosa. En 1980 la Universidad crea
+                        el
+                        instituto de Biología con la finalidad investigación en este campo y generar la propuesta
+                        para la
+                        creación de la carrera de biología; dentro de los proyecto de investigación del instituto
+                        estaba el
+                        proyecto "Leguminosas forrajeras del estado de Tabasco" a cargo de la Biol. Guadalupe Ramos
+                        Espinosa, en el se realiza una colecta de especímenes de respaldo los cuales fueron
+                        depositados en
+                        el herbario del colegio superior de agricultura Tropical en cárdenas, ya que no se contaba
+                        con un
+                        sitio apropiado para su conservación.</p>
+                </div>
+                <div class="col-md-4">
+                    <img src="{% static  'img/_10959641_1374401536207532_4163968313406776733_n.png' %}"
+                        alt="Historia del Herbario" class="img-fluid rounded mb-3 mb-md-0 custom-img-right">
+                </div>
+            </div>
+
+            <div class="text-content mb-5">
+                <p>Una vez aprobado el proyecto, en 1983 inicia la licenciatura en Biología y con el propósito de
+                    dar
+                    sustento a los programas relacionados con la botánica, se construye un edificio de 108 m2 para
+                    el
+                    herbario, el cual se entrega en 1985. Así, El herbario arranca formalmente su desarrollo,
+                    reincorporando
+                    la colección de leguminosas pero, además recibe por donación un lote importante de ejemplares
+                    sin
+                    procesar del Colegio Superior de Agricultura tropical a través de los Biólogos Sergio Zamudio
+                    Ruiz y
+                    Gonzalo Ortiz Gil quienes rescataron dicho material al cierre de las instalaciones.</p>
+            </div>
+
+            <!-- Sección con imagen izquierda -->
+            <div class="row mb-5">
+                <div class="col-md-4">
+                    <img src="{% static  'img/Enero 2017.jpg' %}" alt="Desarrollo del Herbario"
+                        class="img-fluid rounded mb-3 mb-md-0 custom-img-left">
+                </div>
+                <div class="col-md-8 text-content">
+                    <p>En los primeros años de su desarrollo, el Herbario se enfocó a la formación y organización de
+                        las
+                        colecciones, así como en lograr financiamientos para adquirir muebles de Herbario,
+                        deshumidificadores, microscopios, equipo, colecta, materiales de consumo para procesar
+                        ejemplares de
+                        Herbario y literatura taxonómica para identificación, así como iniciar un programa de
+                        exploración
+                        botánica en todo el Estado. En estos esfuerzos se contó con la colaboración del Biólogo
+                        Miguel
+                        Alberto magaña y más adelante, se unieron las Biólogas Ofelia Castillo Acosta, Silvia
+                        Capello García
+                        y Eduardo López Hernández, así como alumnos a través de su servicio social, además del Biol.
+                        Gonzalo
+                        Ortiz Gil, quien trabaja en el Centro Regional de Chapingo en Tabasco.</p>
+
+                    <p>Igualmente en ese entonces se estableció un convenio de apoyo en la colecta y en la
+                        identificación
+                        por parte del Herbario ENCB del instituto Politécnico Nacional dentro del Proyecto Floral
+                        Mesoamericana. Se puede decir que este ha sido un periodo de los más intensos, ya que además
+                        de lo
+                        anterior se obtuvo el registros de las siglas del herbario en el índex Herbariorum del New
+                        York
+                        Botanical Garden, las cuales corresponden a las mismas siglas de la Universidad, es decir
+                        UJAT.</p>
+
+                    <p>En 1988, la División Académica cambia de instalaciones pero el herbario queda en el mismo
+                        lugar. En
+                        esta etapa, el Herbario recibe poca atención y apoyos institucionales, ya que al no contar
+                        con un
+                        presupuesto propio, se le retira personal técnico y se hace difícil la participación de los
+                        estudiantes. Sin embargo el crecimiento de las colecciones continua con las aportaciones de
+                        los
+                        materiales de Chapingo, proporcionados por el Biólogo Ortiz y el intercambio institucional y
+                        de
+                        algunos proyectos financiados por CONACyT. Entonces las instalaciones se hicieron
+                        insuficientes e
+                        infuncionales, por lo que se inició la gestión de otro edificio.</p>
+                </div>
+            </div>
+
+            <div class="text-content mb-5">
+                <p>El 26 de julio de 1999 se inaugura el nuevo edificio, está formado por independiente para
+                    resguardar las
+                    colecciones actuales suficiente para el crecimiento de los próximos 10 años; además, tiene un
+                    área de
+                    secado y fumigación, una pequeña bodega, un área de montaje y procesamiento de material, una
+                    pequeña
+                    biblioteca, tres cubículos, una sala de exposiciones y un salón de usos múltiples para cursos y
+                    seminarios. El área total del edificio es de 520 m2.</p>
+
+                <p>Actualmente, el personal consiste de una encargada, una curadora de Hongos y un técnico, así como
+                    el
+                    doctor Humberto Hernández Trejo, como investigador asociado. Además, cuenta con el apoyo de 1 o
+                    2
+                    alumnos semestrales de servicio social en las actividades de montaje, intercalado y organización
+                    de
+                    ejemplares .En el plano académico, es importante la adscripción de tesista de la UJAT y de la
+                    estrecha
+                    colaboración y participación del centro regional de Chapingo, quienes a través del trabajo
+                    realizado en
+                    proyectos conjuntos y más recientemente con las prácticas de campo y tesistas de la licenciatura
+                    Agronomía, han aportado en el crecimiento de las colecciones con el depósito de sus ejemplares
+                    en este
+                    Herbario. Otra institución que ha aportado ejemplares ha sido la empresa Desarrollo Forestal, SA
+                    de CV.
+                </p>
+            </div>
+
+            <!-- Tabla de colecciones -->
+            <div class="table-responsive mb-5">
+                <table class="table table-bordered table-hover custom-table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Colecciones</th>
+                            <th class="text-center">Ejemplares</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Fanerógamas</td>
+                            <td class="text-center">22,827</td>
+                        </tr>
+                        <tr>
+                            <td>Hongos</td>
+                            <td class="text-center">850</td>
+                        </tr>
+                        <tr>
+                            <td>Musgos</td>
+                            <td class="text-center">20</td>
+                        </tr>
+                        <tr>
+                            <td>Frutos y semillas</td>
+                            <td class="text-center">200</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        {% endblock %}

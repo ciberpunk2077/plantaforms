@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<main class="main-content" id="mainContent" style="margin-top: 70px;">
+    <div class="container-fluid py-4">
+        <!-- Hero Section -->
+        <div class="hero text-center py-4">
+            <img src="{% static  'img/logo 5 negro.png' %}" alt="Logo Herbario Ujat" class="hero-logo img-fluid"
+                style="max-height: 250px;">
+        </div>
+
+        <header class="text-center mb-5">
+            <h1>Bienvenido al Herbario UJAT</h1>
+            <p class="lead text-muted">Explora nuestra colección de especies botánicas de la región</p>
+        </header>
+
+
+
+        <div class="container">
+            <!-- Header Section -->
+            <div class="header-bg text-center">
+                <h1 class="display-4">Herbario UJAT</h1>
+                <p class="lead">Universidad Juárez Autónoma de Tabasco</p>
+            </div>
+
+            <!-- Información de colección -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Información de colección</h3>
+                    <div class="card info-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Información del Herbario</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><span class="label">Nombre:</span> Herbario</p>
+                                    <p><span class="label">Siglas:</span> UJAT</p>
+                                    <p><span class="label">Año de fundación:</span> 1985</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><span class="label">Clasificaciones:</span> Alfabético</p>
+                                    <p><span class="label">Áreas:</span> Botánica</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Directorio -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Directorio</h3>
+
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h4 class="mb-0">Investigador-profesor</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Lic. Ma. de los Ángeles Guadarrama Olivera</p>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h4 class="mb-0">Personal Activo</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Salome López Casanova</p>
+                            <p class="card-text">P. de Biól. María del Carmen Jesús Garíca</p>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h4 class="mb-0">Tecnico académico</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Nahum Muñiz Chavarría</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cobertura taxonómica -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>COBERTURA TAXONÓMICA</h3>
+                    <div class="card info-card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><span class="label">Reino:</span> Plantae</p>
+                                    <p><span class="label">Phylum:</span> Magnoliophyta, Pteridophyta</p>
+                                    <p><span class="label">Clase:</span> Filicopsida, Liliopsida, Magnoliopsida
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><span class="label">Orden:</span> Arecales, Asparagales, Asterales,
+                                        Fabales, Poales,
+                                        Polypodiales, Solanales</p>
+                                    <p><span class="label">Familia:</span> Arecaceae, Asteraceae, Fabaceae,
+                                        Orchidaceae,
+                                        Poaceae, Solanaceae, Vittariaceae</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejemplares -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>EJEMPLARES</h3>
+                    <div class="card info-card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><span class="label">Total de ejemplares:</span> 18,906</p>
+                                    <p><span class="label">Porcentaje de confiabilidad:</span> 1%</p>
+                                    <p><span class="label">Ejemplares montados sin etiqueta:</span> 1,200</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><span class="label">Ejemplares determinados:</span> 800</p>
+                                    <p><span class="label">Ejemplares digitalizados:</span> 5,295</p>
+                                    <p><span class="label">Ejemplares públicos:</span> 16,906</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cobertura geográfica -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>COBERTURA GEOGRÁFICA</h3>
+                    <div class="card info-card">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <strong>México, Tabasco</strong>
+                                    <ol class="mt-2">
+                                        <li>Componente: Lótico superficial.</li>
+                                    </ol>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>México, Tabasco</strong>
+                                    <ol class="mt-2">
+                                        <li>Región: Pacífico Sur y Zona Istmica.</li>
+                                        <li>Ambiente: Dulceacuícola.</li>
+                                        <li>Componente: Necton.</li>
+                                    </ol>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>México, Tabasco</strong>
+                                    <ol class="mt-2">
+                                        <li>Componente: Necton.</li>
+                                    </ol>
+                                </li>
+                                <li class="list-group-item">
+                                    <strong>México, Tabasco</strong>
+                                    <ol class="mt-2">
+                                        <li>Región: Pacífico Sur y Zona Istmica.</li>
+                                        <li>Ambiente: Dulceacuícola.</li>
+                                        <li>Componente: Bentos.</li>
+                                    </ol>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</main>
+
+{% endblock %}

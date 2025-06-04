@@ -1,0 +1,184 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('../img/naturaleza.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.hero {
+    height: 400px;
+    /* Ajusta esta altura según necesites */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../img/foto-de-una-planta.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    /* Para contener el logo agrandado */
+}
+
+/* Estilo específico para el logo */
+.hero-logo {
+    width: 180px;
+    /* Tamaño aumentado */
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+/* Efecto hover opcional */
+.hero-logo:hover {
+    transform: scale(1.05);
+}
+
+.navbar {
+    background-image: url('../img/istockphoto-1415682445-1024x1024.jpg');
+    padding: 15px 0;
+}
+
+.text-herbario {
+    margin: 0;
+    color: white;
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7),
+        -2px -2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 100%;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+}
+
+.sidebar .nav-link {
+    color: #495057;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin: 2px 0;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+    background-color: #2e7d32;
+    color: white;
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Plant cards */
+.plant-card {
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.plant-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    color: #27ae60;
+    margin-bottom: 0.5rem;
+}
+
+.scientific-name {
+    color: #7f8c8d;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.btn-details {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+}
+
+.btn-details:hover {
+    background-color: #2ecc71;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+    .offcanvas-lg {
+        position: fixed;
+        bottom: 0;
+        z-index: 1045;
+        top: 0;
+        left: 0;
+        width: 300px;
+        border-right: 1px solid rgba(0, 0, 0, .2);
+        transform: translateX(-100%);
+        visibility: hidden;
+    }
+
+    .offcanvas-lg.show {
+        transform: none;
+        visibility: visible;
+    }
+
+    .text-herbario {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .hero {
+        padding: 40px 15px;
+    }
+
+    .plant-gallery .col-md-6 {
+        margin-bottom: 20px;
+    }
+}
+
+/* --- Sidebar Fijo con Scroll --- */
+.sticky-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.offcanvas-body {
+    padding: 0;
+}
+
+/* Ajuste para el offcanvas en móviles */
+@media (max-width: 991.98px) {
+    .sticky-sidebar {
+        position: fixed;
+        z-index: 1040;
+    }
+
+    .offcanvas-lg {
+        height: 100vh;
+    }
+}
+
+/* Asegurar espacio para el contenido principal */
+.main-content {
+    margin-left: auto;
+    padding-left: 15px;
+}
