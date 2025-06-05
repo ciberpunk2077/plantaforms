@@ -6,19 +6,11 @@
 <main class="main-content" id="mainContent" style="margin-top: 70px;">
     <div class="container-fluid py-4">
         <!-- Hero Section -->
-        <div class="hero text-center py-4">
-            <img src="{% static  'img/logo 5 negro.png' %}" alt="Logo Herbario Ujat" class="hero-logo img-fluid"
-                style="max-height: 250px;">
-        </div>
-
-        <header class="text-center mb-5">
-            <h1>Bienvenido al Herbario UJAT</h1>
-            <p class="lead text-muted">Explora nuestra colección de especies botánicas de la región</p>
-        </header>
+        {% include 'head.html' %}
 
         <div class="container py-5">
             <!-- Presentación -->
-            <div class="intro-section">
+            <div class="header-bg text-center">
                 <h1 class="display-4 mb-4">Presentación</h1>
                 <p class="lead">Introducción</p>
             </div>

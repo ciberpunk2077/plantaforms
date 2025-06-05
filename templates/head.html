@@ -1,0 +1,18 @@
+{% load static %}
+
+<div class="hero text-center py-4">
+    <img id="logo" src="{% static 'img/logo 5 negro.png' %}" data-logo-light="{% static 'img/logo 5 negro.png' %}"
+        data-logo-dark="{% static 'img/logo 5 blanco.png' %}" alt="Logo Herbario Ujat" class="hero-logo img-fluid"
+        style="max-height: 250px;">
+</div>
+
+<header class="text-center mb-5">
+    <h1 class="header-text">Bienvenido al Herbario UJAT</h1> <!-- Agrega clase para el texto -->
+    <button id="darkModeToggle">🌙 Modo Oscuro</button>
+    <p class="header-text">Explora nuestra colección de especies botánicas de la región</p>
+    <!-- Clase para el subtítulo -->
+</header>
+
+
+
+<script src="{% static 'js/dark.js' %}"></script>

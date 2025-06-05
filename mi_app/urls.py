@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.home, name='home'),  # Ruta para la página principal
     path('presentacion/', views.presentacion, name='presentacion'), 
     path('datos/', views.datos, name='datos'), 
+    path('nosotros/', views.nosotros, name='nosotros'), 
 ]

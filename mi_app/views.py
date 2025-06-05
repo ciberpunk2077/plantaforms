@@ -9,3 +9,6 @@ def presentacion(request):
 
 def datos(request):
     return render(request, 'mi_app/datos.html')
+
+def nosotros(request):
+    return render(request, 'mi_app/nosotros.html')
