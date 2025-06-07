@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Agregar Nueva Planta</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Guardar Planta</button>
+    <a href="{% url 'catalogo:lista-plantas' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+
+<!-- Mapa para coordenadas (opcional) -->
+<div id="map" style="height: 300px; margin-top: 20px;"></div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Scripts para mapa (si usas coordenadas) -->
+<script>
+    // Aquí puedes añadir JavaScript para el mapa
+</script>
+{% endblock %}

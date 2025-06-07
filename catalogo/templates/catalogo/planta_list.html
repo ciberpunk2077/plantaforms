@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Listado de Plantas</h1>
+<ul>
+    {% for planta in plantas %}
+    <li>{{ planta.nombre_cientifico }} - {{ planta.numero_recolecta }}</li>
+    {% empty %}
+    <li>No hay plantas registradas</li>
+    {% endfor %}
+</ul>
+{% endblock %}
