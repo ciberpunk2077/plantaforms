@@ -1,0 +1,60 @@
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background-attachment: fixed;
+}
+
+.min-vh-100 {
+    min-height: 100vh;
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    border: none;
+}
+
+.toggle-password {
+    cursor: pointer;
+}
+
+.form-control-lg {
+    padding: 0.75rem 1rem;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.min-vh-100 {
+    min-height: 100vh;
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    border: none;
+}
+
+.toggle-password {
+    cursor: pointer;
+}
+
+.form-control-lg {
+    padding: 0.75rem 1rem;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}

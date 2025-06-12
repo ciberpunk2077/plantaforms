@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h1>Listado de Plantas</h1>
-<ul>
-    {% for planta in plantas %}
-    <li>{{ planta.nombre_cientifico }} - {{ planta.numero_recolecta }}</li>
-    {% empty %}
-    <li>No hay plantas registradas</li>
-    {% endfor %}
-</ul>
+<main class="main-content" id="mainContent" style="margin-top: 70px;">
+    <div class="container">
+        {% include 'head.html' %}
+        <div class="row g-4">
+
+            <h1>{% if object %}Editar{% else %}Nueva{% endif %} Muestra</h1>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+</main>
 {% endblock %}

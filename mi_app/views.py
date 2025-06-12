@@ -12,3 +12,6 @@ def datos(request):
 
 def nosotros(request):
     return render(request, 'mi_app/nosotros.html')
+
+def prueba(request):
+    return render(request,'mi_app/prueba.html')

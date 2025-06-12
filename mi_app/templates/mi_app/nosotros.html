@@ -3,219 +3,517 @@
 
 {% block content %}
 
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #1e5799 0%, #2989d8 50%, #207cca 100%);
+    }
+
+    .section-title {
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .section-title:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: #3498db;
+    }
+
+    .divider {
+        width: 80px;
+        height: 3px;
+        background: #3498db;
+        margin: 10px auto;
+    }
+
+    .timeline {
+        position: relative;
+        padding-left: 50px;
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .timeline-icon {
+        position: absolute;
+        left: -50px;
+        top: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .timeline-content {
+        padding: 10px;
+    }
+
+    .timeline-content h5 {
+        margin-bottom: 5px;
+        font-size: 1rem;
+    }
+
+    .plant-card {
+        transition: transform 0.3s ease;
+    }
+
+    .plant-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+    }
+</style>
+
+
 <main class="main-content" id="mainContent" style="margin-top: 70px;">
-    {% include 'head.html' %}
+    <div class="container-fluid py-4">
+        <!-- Hero Section -->
+        {% include 'head.html' %}
 
-    <section class="hero-section text-center">
+        <div class="hero-section bg-success bg-gradient text-white py-5 mb-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <h1 class="display-4 fw-bold mb-3">Herbario UJAT</h1>
+                        <p class="lead mb-4">Preservando el patrimonio natural de Tabasco desde 1980</p>
+                        <div class="d-flex align-items-center">
+                            <div class="me-4">
+                                <div class="display-5 fw-bold">48,000+</div>
+                                <div class="small">Muestras científicas</div>
+                            </div>
+                            <div class="border-start ps-4">
+                                <div class="display-5 fw-bold">7</div>
+                                <div class="small">Colecciones especializadas</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <img src="{% static 'img/herbario_icon.png' %}" alt="Icono Herbario" class="img-fluid"
+                            style="max-height: 200px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="container">
-            <h1 class="display-4 fw-bold">Bienvenido al Herbario de la UJAT</h1>
-            <p class="lead">Herbario UJAT resguarda acervo de impacto internacional</p>
+            <!-- Introducción -->
+            <section class="mb-5 py-4">
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="bg-white p-4 rounded-3 shadow-sm">
+                            <p class="lead fw-bold text-primary">Las 48 mil muestras que alberga forman parte del
+                                patrimonio
+                                natural y biocultural de Tabasco</p>
+
+                            <p>Conformado por más de siete colecciones científicas que concentran 48 mil muestras de
+                                plantas
+                                vasculares, hongos, algas, briofitas, granos de polen, frutos y semillas, el Herbario de
+                                la
+                                Universidad Juárez Autónoma de Tabasco (UJAT) representa un archivo histórico que lo
+                                distingue y
+                                posiciona a nivel internacional.</p>
+
+                            <p>Así lo expresó la directora del Herbario UJAT, Silvia Cappello García, quien dio detalles
+                                del
+                                trabajo que realiza junto a un equipo interdisciplinario de colaboradores, en este
+                                recinto de
+                                conservación ambiental ubicado en la División Académica de Ciencias Biológicas
+                                (DACBiol), mismo
+                                que fue distinguido el pasado 5 de junio con la Medalla al Mérito por la Defensa del
+                                Medio
+                                Ambiente 2017, otorgada por la LXII Legislatura del H. Congreso del Estado de Tabasco.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <h4 class="card-title text-center mb-4">Datos clave</h4>
+                                <div class="timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-icon bg-primary text-white">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <h5>Fundación</h5>
+                                            <p>1980</p>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-icon bg-success text-white">
+                                            <i class="fas fa-globe"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <h5>Registro internacional</h5>
+                                            <p>1987</p>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-icon bg-info text-white">
+                                            <i class="fas fa-leaf"></i>
+                                        </div>
+                                        <div class="timeline-content">
+                                            <h5>Muestras totales</h5>
+                                            <p>48,000</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Historia -->
+            <section class="mb-5 py-4">
+                <div class="section-header text-center mb-5">
+                    <h2 class="section-title position-relative d-inline-block">Historia del Herbario</h2>
+                    <div class="divider mx-auto"></div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="bg-white p-4 rounded-3 shadow-sm h-100">
+                            <p>Cappello García mencionó que los inicios del herbario de la máxima casa de estudios se
+                                remontan a
+                                1980, año en que fue fundado con el propósito de aportar conocimientos para beneficio de
+                                la
+                                sociedad, a través del estudio y concentración de colecciones de la flora y los hongos
+                                que
+                                existen en la entidad, lo cual es evidencia del patrimonio natural y biocultural de esta
+                                región
+                                del trópico húmedo.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bg-white p-4 rounded-3 shadow-sm h-100">
+                            <p>"Nuestra labor como investigadores y formadores de estudiantes se enmarca dentro de los
+                                criterios
+                                del Código Deontológico del Consejo Internacional de Museos, adscrito a la Organización
+                                de las
+                                Naciones Unidas para la Educación, la Ciencia y la Cultura (UNESCO)", dijo tras recordar
+                                que fue
+                                en 1987 cuando se obtuvo el registro en el Index Herbariorum del New York Botanical
+                                Garden,
+                                recibiendo el acrónimo UJAT, por lo que internacionalmente ahora es conocido como
+                                Herbario UJAT.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Funcionamiento -->
+            <section class="mb-5 py-4 bg-light rounded-3">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <img src="{% static 'img/herbario_interior.jpg' %}" alt="Interior del herbario"
+                            class="img-fluid rounded">
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="mb-4">¿Qué es un herbario?</h2>
+                        <p class="lead">La doctora en Ciencias Biológicas explicó que un herbario funciona como un museo
+                            de
+                            plantas, donde se protege, investiga y conserva material botánico procesado, junto con sus
+                            flores,
+                            frutos y semillas, incluyendo ejemplares de hongos y algas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Colecciones -->
+            <section class="mb-5 py-4">
+                <div class="section-header text-center mb-5">
+                    <h2 class="section-title position-relative d-inline-block">Nuestras colecciones</h2>
+                    <div class="divider mx-auto"></div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <h3 class="card-title">Distribución de nuestras muestras</h3>
+                                <div class="chart-container" style="position: relative; height:300px;">
+                                    <!-- Aquí iría un gráfico de pastel con Chart.js -->
+                                    <canvas id="collectionsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-body">
+                                <h3 class="card-title">Detalle de colecciones</h3>
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-seedling text-success me-2"></i>
+                                            <span>Plantas vasculares</span>
+                                        </div>
+                                        <span class="badge bg-success rounded-pill">35,000</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-fungus text-warning me-2"></i>
+                                            <span>Hongos</span>
+                                        </div>
+                                        <span class="badge bg-warning rounded-pill">5,000</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-water text-info me-2"></i>
+                                            <span>Algas</span>
+                                        </div>
+                                        <span class="badge bg-info rounded-pill">1,000</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-leaf text-primary me-2"></i>
+                                            <span>Helechos</span>
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">500</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-apple-alt text-danger me-2"></i>
+                                            <span>Frutos y semillas</span>
+                                        </div>
+                                        <span class="badge bg-danger rounded-pill">1,000</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <i class="fas fa-dot-circle text-secondary me-2"></i>
+                                            <span>Polen</span>
+                                        </div>
+                                        <span class="badge bg-secondary rounded-pill">300</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Impacto internacional -->
+            <section class="mb-5 py-4 bg-primary text-white rounded-3">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="mb-4">Reconocimiento internacional</h2>
+                        <p class="lead">Nuestras muestras colectadas por investigadores y estudiantes se encuentran en
+                            herbarios
+                            nacionales e internacionales, como el Museo de Historia Natural de Londres y el Jardín
+                            Botánico Kew
+                            en Reino Unido.</p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <i class="fas fa-globe-americas fa-5x opacity-25"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Importancia ecológica -->
+            <section class="mb-5 py-4">
+                <div class="card border-warning shadow-sm">
+                    <div class="card-header bg-warning text-dark">
+                        <h3 class="mb-0">Importancia ecológica</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Cabe hacer énfasis en que el legado ambiental y cultural del Herbario UJAT cobra relevancia
+                            debido a
+                            que desde 1944 la deforestación, la expansión ganadera excesiva, la intensificación
+                            agrícola, la
+                            urbanización y la explotación petrolera, transformaron el paisaje de Tabasco, provocando la
+                            reducción del 95 por ciento del millón de hectáreas de comunidades de selva que
+                            originalmente
+                            existían.</p>
+
+                        <div class="alert alert-warning mt-4">
+                            <p>"Es por eso que tenemos una mayor responsabilidad, que implica tomar medidas para la
+                                protección,
+                                conservación y aprovechamiento sustentable de lo que aún existe; por tanto, es una
+                                satisfacción
+                                contar con un acervo que tiene un impacto no sólo estatal y nacional sino
+                                internacional",
+                                concluyó Cappello García.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Secciones destacadas -->
+            <section class="mb-5 py-4">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card h-100 border-success shadow-sm">
+                            <div class="card-header bg-success text-white">
+                                <h3 class="mb-0">Patrimonio biocultural</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>La labor del Herbario UJAT se enmarca bajo los criterios del Código Deontológico del
+                                    Consejo
+                                    Internacional de Museos, adscrito a la UNESCO. Sus actividades han impactado a
+                                    Tabasco en
+                                    dos aspectos:</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        Conocimiento de la biodiversidad
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        Formación de recursos humanos
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100 border-info shadow-sm">
+                            <div class="card-header bg-info text-white">
+                                <h3 class="mb-0">Nuestras colecciones</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Resguarda colecciones que concentran 48 mil muestras de:</p>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2"><i class="fas fa-seedling text-success me-2"></i> Plantas
+                                                vasculares</li>
+                                            <li class="mb-2"><i class="fas fa-apple-alt text-danger me-2"></i> Frutos y
+                                                semillas
+                                            </li>
+                                            <li class="mb-2"><i class="fas fa-dot-circle text-secondary me-2"></i> Polen
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-6">
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2"><i class="fas fa-water text-info me-2"></i> Algas</li>
+                                            <li class="mb-2"><i class="fas fa-leaf text-primary me-2"></i> Helechos</li>
+                                            <li class="mb-2"><i class="fas fa-fungus text-warning me-2"></i> Hongos</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Galería -->
+            <section class="mb-5 py-4">
+                <div class="section-header text-center mb-5">
+                    <h2 class="section-title position-relative d-inline-block">Ejemplares destacados</h2>
+                    <div class="divider mx-auto"></div>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card plant-card h-100 border-0 shadow-sm">
+                            <div class="card-img-top overflow-hidden" style="height: 200px;">
+                                <img src="{% static 'img/01.jpg' %}" class="img-fluid w-100 h-100 object-fit-cover"
+                                    alt="Planta 1">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title h5">Mariguana (Mota)</h3>
+                                <p class="card-text text-muted"><em>Cannabis sativa L.</em></p>
+                                <p class="card-text">Hierba anual de 65 cm de alta con brotes blanquesinas.</p>
+                            </div>
+                            <div class="card-footer bg-transparent">
+                                <button class="btn btn-sm btn-outline-primary">Ver detalles</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card plant-card h-100 border-0 shadow-sm">
+                            <div class="card-img-top overflow-hidden" style="height: 200px;">
+                                <img src="{% static 'img/20170324_121000.jpg' %}"
+                                    class="img-fluid w-100 h-100 object-fit-cover" alt="Planta 2">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title h5">Cola de caballo</h3>
+                                <p class="card-text text-muted"><em>Equisetum giganteum L.</em></p>
+                            </div>
+                            <div class="card-footer bg-transparent">
+                                <button class="btn btn-sm btn-outline-primary">Ver detalles</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card plant-card h-100 border-0 shadow-sm">
+                            <div class="card-img-top overflow-hidden" style="height: 200px;">
+                                <img src="{% static 'img/20170324_122620.jpg' %}"
+                                    class="img-fluid w-100 h-100 object-fit-cover" alt="Planta 3">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title h5">Jonote</h3>
+                                <p class="card-text text-muted"><em>Heliocarpus appendiculatus</em></p>
+                            </div>
+                            <div class="card-footer bg-transparent">
+                                <button class="btn btn-sm btn-outline-primary">Ver detalles</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="#" class="btn btn-primary">Ver más ejemplares</a>
+                </div>
+            </section>
         </div>
-    </section>
 
-    <!-- Contenido principal -->
-    <div class="container">
-        <!-- Introducción -->
-        <section class="mb-5">
-            <p class="lead fw-bold">Las 48 mil muestras que alberga forman parte del patrimonio natural y biocultural de
-                Tabasco</p>
 
-            <div class="row">
-                <div class="col-lg-8">
-                    <p>Conformado por más de siete colecciones científicas que concentran 48 mil muestras de plantas
-                        vasculares, hongos, algas, briofitas, granos de polen, frutos y semillas, el Herbario de la
-                        Universidad Juárez Autónoma de Tabasco (UJAT) representa un archivo histórico que lo distingue y
-                        posiciona a nivel internacional, además de que están preparadas para permanecer por muchos años
-                        bajo
-                        condiciones óptimas de preservación.</p>
 
-                    <p>Así lo expresó la directora del Herbario UJAT, Silvia Cappello García, quien dio detalles del
-                        trabajo
-                        que realiza junto a un equipo interdisciplinario de colaboradores, en este recinto de
-                        conservación
-                        ambiental ubicado en la División Académica de Ciencias Biológicas (DACBiol), mismo que fue
-                        distinguido el pasado 5 de junio con la Medalla al Mérito por la Defensa del Medio Ambiente
-                        2017,
-                        otorgada por la LXII Legislatura del H. Congreso del Estado de Tabasco.</p>
-                </div>
-                <div class="col-lg-4">
-                    <div class="highlight-box">
-                        <h4>Datos clave</h4>
-                        <ul class="list-custom">
-                            <li><strong>Fundación:</strong> 1980</li>
-                            <li><strong>Registro internacional:</strong> 1987</li>
-                            <li><strong>Muestras totales:</strong> 48,000</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Historia -->
-        <section class="mb-5">
-            <h2 class="mb-4">Historia del Herbario</h2>
-            <p>Cappello García mencionó que los inicios del herbario de la máxima casa de estudios se remontan a 1980,
-                año
-                en que fue fundado con el propósito de aportar conocimientos para beneficio de la sociedad, a través del
-                estudio y concentración de colecciones de la flora y los hongos que existen en la entidad, lo cual es
-                evidencia del patrimonio natural y biocultural de esta región del trópico húmedo.</p>
 
-            <p>"Nuestra labor como investigadores y formadores de estudiantes se enmarca dentro de los criterios del
-                Código
-                Deontológico del Consejo Internacional de Museos, adscrito a la Organización de las Naciones Unidas para
-                la
-                Educación, la Ciencia y la Cultura (UNESCO)", dijo tras recordar que fue en 1987 cuando se obtuvo el
-                registro en el Index Herbariorum del New York Botanical Garden, recibiendo el acrónimo UJAT, por lo que
-                internacionalmente ahora es conocido como Herbario UJAT.</p>
-        </section>
-
-        <!-- Funcionamiento -->
-        <section class="mb-5">
-            <h2 class="mb-4">¿Qué es un herbario?</h2>
-            <p>La doctora en Ciencias Biológicas explicó que un herbario funciona como un museo de plantas, donde se
-                protege, investiga y conserva material botánico procesado, junto con sus flores, frutos y semillas,
-                incluyendo ejemplares de hongos y algas.</p>
-        </section>
-
-        <!-- Colecciones -->
-        <section class="mb-5">
-            <h2 class="mb-4">Nuestras colecciones</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <p>En referencia a las cerca de 48 mil muestras que se resguardan en el lugar, especificó que:</p>
-                    <ul class="list-group mb-4">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Plantas vasculares
-                            <span class="badge bg-primary rounded-pill">35,000</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Hongos
-                            <span class="badge bg-primary rounded-pill">5,000</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Algas
-                            <span class="badge bg-primary rounded-pill">1,000</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Helechos
-                            <span class="badge bg-primary rounded-pill">500</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Frutos y semillas
-                            <span class="badge bg-primary rounded-pill">1,000</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Polen
-                            <span class="badge bg-primary rounded-pill">300</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <p>"Todas permanecen en un espacio construido y diseñado para su preservación", indicó.</p>
-                    <p>Destacó que aunque este acervo es una representación de la flora y microflora del estado de
-                        Tabasco,
-                        también se han hecho intercambios y donaciones con otros herbarios nacionales e internacionales,
-                        principalmente de la región tropical, lo que ha generado que el Herbario UJAT contenga de igual
-                        manera ejemplares de otros estados y países.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Impacto internacional -->
-        <section class="mb-5">
-            <h2 class="mb-4">Reconocimiento internacional</h2>
-            <p>En ese sentido, la también curadora de la sección de Micología comentó que muchas muestras colectadas por
-                investigadores y estudiantes de licenciatura o posgrado, se encuentran en herbarios nacionales e
-                internacionales, como por ejemplo el Herbario del Museo de Historia Natural de Londres y el Jardín
-                Botánico
-                Kew, ambos de Reino Unido.</p>
-        </section>
-
-        <!-- Importancia ecológica -->
-        <section class="mb-5">
-            <h2 class="mb-4">Importancia ecológica</h2>
-            <div class="alert alert-warning">
-                <p>Cabe hacer énfasis en que el legado ambiental y cultural del Herbario UJAT cobra relevancia debido a
-                    que
-                    desde 1944 la deforestación, la expansión ganadera excesiva, la intensificación agrícola, la
-                    urbanización y la explotación petrolera, transformaron el paisaje de Tabasco, provocando la
-                    reducción
-                    del 95 por ciento del millón de hectáreas de comunidades de selva que originalmente existían.</p>
-            </div>
-            <p>"Es por eso que tenemos una mayor responsabilidad, que implica tomar medidas para la protección,
-                conservación
-                y aprovechamiento sustentable de lo que aún existe; por tanto, es una satisfacción contar con un acervo
-                que
-                tiene un impacto no sólo estatal y nacional sino internacional", concluyó Cappello García.</p>
-        </section>
-
-        <!-- Secciones destacadas -->
-        <div class="row mb-5">
-            <div class="col-md-6">
-                <div class="card h-100">
-                    <div class="card plant-card h-100 shadow-sm">
-                        <h3 class="card-title">Patrimonio biocultural</h3>
-                        <p class="card-text">La labor del Herbario UJAT se enmarca bajo los criterios del Código
-                            Deontológico del Consejo Internacional de Museos, adscrito a la UNESCO. Sus actividades han
-                            impactado a Tabasco en dos aspectos:</p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Conocimiento de la biodiversidad</li>
-                            <li class="list-group-item">Formación de recursos humanos</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card h-100">
-                    <div class="card plant-card h-100 shadow-sm">
-                        <h3 class="card-title">Resguarda colecciones que concentran 48 mil muestras de:</h3>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Plantas vasculares</li>
-                            <li class="list-group-item">Frutos y semillas</li>
-                            <li class="list-group-item">Polen</li>
-                            <li class="list-group-item">Algas</li>
-                            <li class="list-group-item">Helechos</li>
-                            <li class="list-group-item">Hongos</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Galería -->
-        <section class="gallery mb-5">
-            <h2 class="text-center mb-4">Ejemplares destacados</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card plant-card h-100 shadow-sm">
-                        <img src="{% static 'img/01.jpg' %}" class="card-img-top" alt="Planta 1">
-                        <div class="card-body">
-                            <h3 class="card-title h5">Mariguana (Mota)</h3>
-                            <p class="card-text text-muted"><em>Cannabis sativa L.</em></p>
-                            <p class="card-text text-muted">Hierba anual de 65 cm de alta con brotes blanquesinas.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card plant-card h-100 shadow-sm">
-                        <img src="{% static 'img/20170324_121000.jpg' %}" class="card-img-top" alt="Planta 2">
-                        <div class="card-body">
-                            <h3 class="card-title h5">Cola de caballo</h3>
-                            <p class="card-text text-muted"><em>Equisetum giganteum L.</em></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card plant-card h-100 shadow-sm">
-                        <img src="{% static 'img/20170324_122620.jpg' %}" class="card-img-top" alt="Planta 3">
-                        <div class="card-body">
-                            <h3 class="card-title h5">Jonote</h3>
-                            <p class="card-text text-muted"><em>Heliocarpus appendiculatus</em></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </div>
 
-    {% endblock %}
+</main>
+
+<script>
+    // Script para el gráfico de colecciones (requiere Chart.js)
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('collectionsChart').getContext('2d');
+        const collectionsChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Plantas vasculares', 'Hongos', 'Algas', 'Helechos', 'Frutos y semillas', 'Polen'],
+                datasets: [{
+                    data: [35000, 5000, 1000, 500, 1000, 300],
+                    backgroundColor: [
+                        '#28a745',
+                        '#ffc107',
+                        '#17a2b8',
+                        '#007bff',
+                        '#dc3545',
+                        '#6c757d'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+{% endblock %}

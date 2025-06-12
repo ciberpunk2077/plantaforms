@@ -52,6 +52,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# settings.py
+CSRF_USE_SESSIONS = False  # Asegúrate que esté en False
+CSRF_COOKIE_HTTPONLY = False  # Permite acceso JavaScript al token
+CSRF_COOKIE_SECURE = False  # True en producción con HTTPS
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', 'http://127.0.0.1:8000']  # Añade tus dominios
+
 ROOT_URLCONF = 'planta.urls'
 
 TEMPLATES = [
@@ -75,6 +81,14 @@ WSGI_APPLICATION = 'planta.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
+LOGIN_URL = 'login'
+
+LOGOUT_URL = 'logout'
+
+LOGIN_REDIRECT_URL = '/catalogo/'
+
+LOGOUT_REDIRECT_URL = '/login/'
 
 DATABASES = {
     'default': {

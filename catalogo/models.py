@@ -167,14 +167,24 @@ class MuestraBiologica(MuestraBase):
         choices=TIPO_MUESTRA_CHOICES,
         help_text="Tipo de muestra biológica"
     )
+
+    imagen = models.ImageField(
+        upload_to='muestras/imagenes/',  # O usa tu método get_upload_path_imagen
+        null=True,
+        blank=True,
+        verbose_name="Imagen de la muestra"
+    )
     
     # Añadir campo de imagen que falta
     def get_upload_path_imagen(self, filename):  # Quita el decorador @staticmethod
-        if not self.especie or not self.especie.familia:
-            base_path = f"imagenes/muestras/sin_especie/{self.tipo_muestra.lower()}"
+        base_path = "imagenes/muestras/"
+        if self.especie and self.especie.familia:
+            base_path += f"{slugify(self.especie.familia.nombre)}/{slugify(self.especie.nombre)}/"
         else:
-            base_path = f"imagenes/muestras/{slugify(self.especie.familia.nombre)}/{slugify(self.especie.nombre)}/{self.tipo_muestra.lower()}"
-        return os.path.join(base_path, filename)
+            base_path += "sin_especie/"
+        return f"{base_path}{self.tipo_muestra.lower()}/{filename}"
+    
+    
     
     class Meta:
         verbose_name = "Muestra Biológica"
