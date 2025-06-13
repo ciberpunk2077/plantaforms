@@ -1,60 +1,89 @@
-from django.contrib import messages
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from catalogo.models import MuestraBiologica
-from catalogo.forms.planta import MuestraBiologicaForm
+from django.contrib import messages
+from ..forms.planta import PlantaForm
+from .muestra import MuestraCreateView, MuestraListView, MuestraDetailView, MuestraUpdateView, MuestraDeleteView
 
-class PlantaListView(ListView):
-    model = MuestraBiologica
-    template_name = 'catalogo/planta_list.html'
-    context_object_name = 'plantas'
-    paginate_by = 20
-    
-    def get_queryset(self):
-        return MuestraBiologica.objects.filter(tipo_muestra='PLANTA').order_by('-fecha')
-
-class MuestraBiologicaPlantaCreateView(PermissionRequiredMixin, CreateView):
-    permission_required = 'catalogo.add_muestrabiologica'  # Correcto según tu modelo
-    model = MuestraBiologica  # Tu modelo principal
-    form_class = MuestraBiologicaForm  # Asegúrate que este formulario existe
+class PlantaCreateView(MuestraCreateView):
+    """
+    Vista especializada para crear muestras de tipo PLANTA
+    """
+    form_class = PlantaForm
+    permission_required = 'catalogo.add_muestrabiologica'
+    tipo_fijo = 'PLANTA'
     template_name = 'catalogo/planta_form.html'
-    success_url = reverse_lazy('catalogo:planta_list')
+    success_url = reverse_lazy('catalogo:planta-list')
     
     def get_form_kwargs(self):
-        """Inyecta el usuario actual al formulario"""
+        """Asegura que el tipo PLANTA se pase al formulario"""
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
+        kwargs['tipo_muestra'] = 'PLANTA'  # Forzar el tipo
         return kwargs
-    
-    def form_valid(self, form):
-        """Lógica post-validación"""
-        # Asignación automática de campos si es necesario
-        if not form.instance.nombre_colector:
-            form.instance.nombre_colector = self.request.user.get_full_name()
-            
-        response = super().form_valid(form)
-        messages.success(self.request, 'Muestra de planta creada exitosamente')
-        return response
     
     def get_context_data(self, **kwargs):
-        """Agrega contexto adicional al template"""
         context = super().get_context_data(**kwargs)
-        context['tipos_muestra'] = MuestraBiologica.TIPO_MUESTRA_CHOICES
+        context.update({
+            'titulo_pagina': "Nueva Planta",
+            'es_planta': True,
+            'subtitulo': "Complete los datos de la planta recolectada"
+        })
         return context
-    permission_required = 'catalogo.add_planta'
-    model = MuestraBiologica
-    form_class = MuestraBiologicaForm
-    template_name = 'catalogo/planta_form.html'  # Asegúrate de crear este template
-    success_url = reverse_lazy('catalogo:planta_list')  # Redirige al listado después de crear
-    
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
     
     def form_valid(self, form):
-        # Aquí puedes añadir lógica adicional antes de guardar
         response = super().form_valid(form)
-        messages.success(self.request, 'Muestra creada exitosamente')
+        messages.success(
+            self.request, 
+            f"Planta {form.instance.nombre_cientifico} registrada exitosamente!"
+        )
+        return response
+
+class PlantaListView(MuestraListView):
+    """Listado específico para plantas"""
+    template_name = 'catalogo/planta_list.html'
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(tipo_muestra='PLANTA').select_related(
+            'especie', 'especie__familia', 'municipio'
+        )
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'titulo_pagina': "Listado de Plantas",
+            'subtitulo': "Plantas registradas en el sistema"
+        })
+        return context
+
+class PlantaDetailView(MuestraDetailView):
+    """Detalle específico para plantas"""
+    template_name = 'catalogo/planta_detail.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        planta = self.get_object()
+        context.update({
+            'titulo_pagina': f"Detalle de {planta.nombre_cientifico}",
+            'es_planta': True,
+            'subtitulo': "Información detallada de la planta"
+        })
+        return context
+    
+# En catalogo/views/planta.py
+class PlantaUpdateView(MuestraUpdateView):
+    """Vista para editar plantas"""
+    template_name = 'catalogo/planta_form.html'
+    tipo_fijo = 'PLANTA'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['titulo_pagina'] = f"Editar {self.object.nombre_cientifico}"
+        return context
+
+class PlantaDeleteView(MuestraDeleteView):
+    """Vista para eliminar plantas"""
+    success_url = reverse_lazy('catalogo:planta-list')
+    
+    def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
+        messages.success(request, "Planta eliminada correctamente")
         return response

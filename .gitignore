@@ -1,62 +1,33 @@
-# Entornos virtuales
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media
+staticfiles
+
+# Environments
+.env
+.venv
+env/
 venv/
 ENV/
-.env/
-.venv/
+env.bak/
+venv.bak/
 
-# Archivos de Python
-*.py[cod]
-*$py.class
-__pycache__/
-*.so
-.Python
-
-# Entornos de desarrollo
+# IDE
 .idea/
 .vscode/
 *.swp
 *.swo
 
-# Django
-*.log
-local_settings.py
-db.sqlite3
-media/
-
-# Archivos de base de datos
-*.sqlite
-*.sqlite3
-
-# Archivos de migraciones (opcional, algunos prefieren versionarlas)
-*/migrations/*.py
-!*/migrations/__init__.py
-
-# Archivos estáticos recolectados
-staticfiles/
-
-# Archivos de caché
-*.cache
-
-# Archivos de coverage
-.coverage
-htmlcov/
-
-# Archivos de distribución / publicación
-dist/
-build/
-*.egg-info/
-*.egg
-
-# Archivos de Jupyter Notebook
-.ipynb_checkpoints
-
-# Archivos de sistema
+# OS generated
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
-
-# Archivos de PyCharm
-.idea/
-*.iml
-
-# Archivos de VS Code
-.vscode/

@@ -3,8 +3,10 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from ..models import MuestraBiologica
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from ..forms import muestra
+
 from catalogo.forms.muestra import MuestraBiologicaForm 
+from django import forms
+from ..models import MuestraBiologica
 
 
 class MuestraListView(ListView):
@@ -54,7 +56,7 @@ class MuestraCreateView(PermissionRequiredMixin, CreateView):
 
 class MuestraUpdateView(UpdateView):
     model = MuestraBiologica
-    form_class = muestra
+    form_class = MuestraBiologicaForm
     template_name = 'catalogo/muestra_form.html'
     success_url = reverse_lazy('catalogo:muestra-list')
 
@@ -76,6 +78,29 @@ class MuestraDeleteView(DeleteView):
         messages.success(self.request, "Muestra eliminada exitosamente.")
         return super().delete(request, *args, **kwargs)
     
+class MuestraBiologicaForm(forms.ModelForm):
+    class Meta:
+        model = MuestraBiologica
+        fields = '__all__'  # O lista los campos específicos
+    
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        tipo_muestra = kwargs.pop('tipo_muestra', None)
+        super().__init__(*args, **kwargs)
+        
+        if tipo_muestra == 'PLANTA':
+            # Personaliza campos para plantas
+            self.fields['nombre_comun'].required = True
+
+            # Verifica si el campo 'familia' existe antes de modificarlo
+            if 'familia' in self.fields:
+                self.fields['familia'].queryset = Familia.objects.all()
+            else:
+                # Opcional: agregar el campo si no existe
+                self.fields['familia'] = forms.ModelChoiceField(
+                    queryset=Familia.objects.all(),
+                    required=False
+                )
 
 
     
