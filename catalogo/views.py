@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import MuestraBiologica
+from django.http import JsonResponse
+from .models import MuestraBiologica, Especie
 
 def catalogo(request):
     muestras = MuestraBiologica.objects.all()
@@ -11,3 +12,26 @@ def lista_plantas(request):
 
 def home(request):
     return render(request, 'mi_app/home.html')
+
+def load_especies(request):
+    """
+    Vista AJAX para cargar especies según la familia seleccionada.
+    Se usa en el formulario de plantas para filtrado dinámico.
+    """
+    familia_id = request.GET.get('familia_id')
+    
+    # Validación básica
+    if not familia_id:
+        return JsonResponse({'error': 'Parámetro familia_id requerido'}, status=400)
+    
+    try:
+        especies = Especie.objects.filter(familia_id=familia_id).order_by('nombre')
+        # Creamos las opciones HTML para el select
+        options_html = '<option value="">Seleccione una especie...</option>'
+        for especie in especies:
+            options_html += f'<option value="{especie.id}">{especie.nombre}</option>'
+        
+        return JsonResponse({'options_html': options_html})
+    
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

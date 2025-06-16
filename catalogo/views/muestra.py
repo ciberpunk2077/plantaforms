@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from catalogo.forms.muestra import MuestraBiologicaForm 
 from django import forms
-from ..models import MuestraBiologica
+from ..models import MuestraBiologica, Familia, Especie, Municipio
 
 
 class MuestraListView(ListView):
@@ -82,25 +82,22 @@ class MuestraBiologicaForm(forms.ModelForm):
     class Meta:
         model = MuestraBiologica
         fields = '__all__'  # O lista los campos específicos
+        widgets = {
+            'tipo_muestra': forms.HiddenInput(),
+            'fecha': forms.DateInput(attrs={'type': 'date'}),
+            'descripcion': forms.Textarea(attrs={'rows': 3}),
+        }
     
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         tipo_muestra = kwargs.pop('tipo_muestra', None)
         super().__init__(*args, **kwargs)
         
-        if tipo_muestra == 'PLANTA':
-            # Personaliza campos para plantas
-            self.fields['nombre_comun'].required = True
-
-            # Verifica si el campo 'familia' existe antes de modificarlo
-            if 'familia' in self.fields:
-                self.fields['familia'].queryset = Familia.objects.all()
-            else:
-                # Opcional: agregar el campo si no existe
-                self.fields['familia'] = forms.ModelChoiceField(
-                    queryset=Familia.objects.all(),
-                    required=False
-                )
+        if 'tipo_muestra' in self.fields and tipo_muestra:
+            self.fields['tipo_muestra'].initial = tipo_muestra
+            
+        # Configuración base para todos los tipos
+        self.fields['municipio'].queryset = Municipio.objects.all()
 
 
     

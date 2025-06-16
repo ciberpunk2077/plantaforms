@@ -4,7 +4,7 @@ from .views.planta import (
     PlantaListView, 
     PlantaDetailView,
     PlantaUpdateView,
-    PlantaDeleteView
+    PlantaDeleteView, load_especies,
 )
 from .views.muestra import MuestraListView
 
@@ -17,6 +17,9 @@ urlpatterns = [
     path('plantas/<int:pk>/', PlantaDetailView.as_view(), name='planta-detail'),
     path('plantas/<int:pk>/editar/', PlantaUpdateView.as_view(), name='planta-update'),
     path('plantas/<int:pk>/eliminar/', PlantaDeleteView.as_view(), name='planta-delete'),
+
+    #URLs especie
+    path('ajax/load-especies/', load_especies, name='ajax_load_especies'),
     
     # URLs generales para muestras (opcional mantenerlas)
     path('muestras/', MuestraListView.as_view(), name='muestra-list'),
