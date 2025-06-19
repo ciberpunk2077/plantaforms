@@ -1,70 +1,302 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 
 {% block content %}
 <main class="main-content" id="mainContent" style="margin-top: 70px;">
     <div class="container">
         {% include 'head.html' %}
+        <div class="row g-4">
+            <!-- Columna del formulario -->
+            <div class="col-lg-6 col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title mb-4">{% if object %}Editar{% else %}Nueva{% endif %} Planta</h4>
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.tipo_muestra }}
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1>Listado de Plantas</h1>
-            <a href="{% url 'catalogo:planta-create' %}" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Nueva Planta
-            </a>
-        </div>
+                            {% if form.errors %}
+                            <div class="alert alert-danger">
+                                {% for field, errors in form.errors.items %}
+                                {{ field }}: {{ errors|join:", " }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
 
-        <div class="card shadow-sm">
-            <div class="card-body">
-                {% if object_list %}
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Nombre Científico</th>
-                                <th>Nombre Común</th>
-                                <th>Familia</th>
-                                <th>Fecha Recolección</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for planta in object_list %}
-                            <tr>
-                                <td>{{ planta.nombre_cientifico }}</td>
-                                <td>{{ planta.nombre_comun|default:"-" }}</td>
-                                <td>{{ planta.familia.nombre|default:"-" }}</td>
-                                <td>{{ planta.fecha|date:"d/m/Y"|default:"-" }}</td>
-                                <td>
-                                    <a href="{% url 'catalogo:planta-detail' planta.pk %}" class="btn btn-sm btn-info"
-                                        title="Ver">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href="{% url 'catalogo:planta-update' planta.pk %}"
-                                        class="btn btn-sm btn-warning" title="Editar">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                            <div class="mb-3">
+                                <label for="{{ form.nombre_cientifico.id_for_label }}" class="form-label fw-bold">Nombre
+                                    Científico</label>
+                                {{ form.nombre_cientifico }}
+                                {% if form.nombre_cientifico.errors %}
+                                <div class="text-danger">{{ form.nombre_cientifico.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.nombre_comun.id_for_label }}" class="form-label fw-bold">Nombre
+                                    Común</label>
+                                {{ form.nombre_comun }}
+                                {% if form.nombre_comun.errors %}
+                                <div class="text-danger">{{ form.nombre_comun.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.fecha.id_for_label }}" class="form-label fw-bold">Fecha de
+                                    Recolección</label>
+                                {{ form.fecha }}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.numero_recolecta.id_for_label }}" class="form-label fw-bold">Número
+                                    de Recolecta</label>
+                                {{ form.numero_recolecta }}
+                                {% if form.numero_recolecta.errors %}
+                                <div class="text-danger">{{ form.numero_recolecta.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="row g-2">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.colonia.id_for_label }}"
+                                        class="form-label fw-bold">Colonia</label>
+                                    {{ form.colonia }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.localidad.id_for_label }}"
+                                        class="form-label fw-bold">Localidad</label>
+                                    {{ form.localidad }}
+                                </div>
+                            </div>
+
+                            <div class="row g-2">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.latitud.id_for_label }}"
+                                        class="form-label fw-bold">Latitud</label>
+                                    {{ form.latitud }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.longitud.id_for_label }}"
+                                        class="form-label fw-bold">Longitud</label>
+                                    {{ form.longitud }}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.descripcion.id_for_label }}"
+                                    class="form-label fw-bold">Descripción</label>
+                                {{ form.descripcion }}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.nombre_colector.id_for_label }}" class="form-label fw-bold">Nombre
+                                    del Recolector</label>
+                                {{ form.nombre_colector }}
+                            </div>
+
+                            <div class="row g-2">
+                                <div class="col-md-6 mb-3">
+                                    <label for="id_especie" class="form-label fw-bold">Familia</label>
+                                    {{ form.familia }}
+                                    {% if form.familia.errors %}
+                                    <div class="text-danger">{{ form.familia.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="id_especie" class="form-label fw-bold">Especie</label>
+                                    {{ form.especie }}
+                                    {% if form.especie.errors %}
+                                    <div class="text-danger">{{ form.especie.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="row g-2">
+                                <div class="col-md-6 mb-3">
+                                    <label for="id_especie" class="form-label fw-bold">Municipio</label>
+                                    {{ form.municipio }}
+                                    {% if form.municipio.errors %}
+                                    <div class="text-danger">{{ form.municipio.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+
+
+                            <div class="d-flex justify-content-between mt-4">
+                                <a href="{% url 'catalogo:planta-list' %}" class="btn btn-outline-danger">
+                                    <i class="fas fa-arrow-left me-2"></i>Regresar
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i>Guardar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna de imagen y mapa -->
+            <div class="col-lg-6 col-md-12">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Fotografía</h5>
+                        <div class="border rounded p-3 text-center bg-light">
+                            <img id="imagePreview"
+                                src="{% if form.imagen.value %}{{ form.imagen.value.url }}{% else %}{% static 'img/placeholder.jpeg' %}{% endif %}"
+                                class="img-fluid mb-3" style="max-height: 300px;">
+
+                            {{ form.imagen }}
+                            {% if form.imagen.errors %}
+                            <div class="text-danger">{{ form.imagen.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
 
-                {% include 'paginacion.html' %} <!-- Si usas paginación -->
-
-                {% else %}
-                <div class="alert alert-info">
-                    No hay plantas registradas aún.
-                    <a href="{% url 'catalogo:planta-create' %}" class="alert-link">
-                        ¿Deseas agregar la primera?
-                    </a>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Ubicación</h5>
+                        <div id="map" class="rounded" style="width: 100%; height: 400px;"></div>
+                        <div class="mt-3">
+                            <button type="button" id="locateBtn" class="btn btn-sm btn-outline-success">
+                                <i class="fas fa-map-marker-alt me-2"></i>Marcar ubicación
+                            </button>
+                            <button type="button" id="resetMapBtn" class="btn btn-sm btn-outline-secondary ms-2">
+                                <i class="fas fa-sync-alt me-2"></i>Reiniciar
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                {% endif %}
             </div>
         </div>
     </div>
-
 </main>
 {% endblock %}
 
-{% include 'catalogo/paginacion.html' %}
+{% block extra_js %}
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script>
+    // Evitar duplicados
+    document.querySelector('form').addEventListener('submit', function () {
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+    });
+
+    // Vista previa de imagen
+    document.getElementById('id_imagen').addEventListener('change', function (e) {
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                document.getElementById('imagePreview').src = event.target.result;
+            };
+            reader.readAsDataURL(this.files[0]);
+        } else {
+            document.getElementById('imagePreview').src = "{% static 'img/placeholder.jpeg' %}";
+        }
+    });
+
+    // Mapa Leaflet
+    document.addEventListener('DOMContentLoaded', function () {
+        const defaultLat = 19.4326;
+        const defaultLng = -99.1332;
+
+        const initialLat = parseFloat(document.getElementById('id_latitud').value) || defaultLat;
+        const initialLng = parseFloat(document.getElementById('id_longitud').value) || defaultLng;
+
+        // Inicializar el mapa
+        const map = L.map('map').setView([initialLat, initialLng], 13);
+
+        // Añadir capa de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Añadir controles
+        L.control.zoom({ position: 'topright' }).addTo(map);
+        L.control.scale({ imperial: false, metric: true }).addTo(map);
+
+        let marker = null;
+
+        function updateMarker(lat, lng) {
+            if (marker) {
+                map.removeLayer(marker);
+            }
+
+            marker = L.marker([lat, lng], { draggable: true }).addTo(map)
+                .bindPopup('Ubicación seleccionada')
+                .openPopup();
+
+            marker.on('dragend', function (e) {
+                const newPos = e.target.getLatLng();
+                updateFormFields(newPos.lat, newPos.lng);
+            });
+
+            map.setView([lat, lng], 15);
+            updateFormFields(lat, lng);
+        }
+
+        function updateFormFields(lat, lng) {
+            document.getElementById('id_latitud').value = lat.toFixed(6);
+            document.getElementById('id_longitud').value = lng.toFixed(6);
+        }
+
+        // Evento para el botón de marcar ubicación
+        document.getElementById('locateBtn').addEventListener('click', function () {
+            const latInput = document.getElementById('id_latitud').value;
+            const lngInput = document.getElementById('id_longitud').value;
+
+            if (latInput && lngInput) {
+                const lat = parseFloat(latInput);
+                const lng = parseFloat(lngInput);
+
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    updateMarker(lat, lng);
+                } else {
+                    alert("Por favor ingresa coordenadas válidas (números)");
+                }
+            } else {
+                alert("Por favor ingresa tanto la latitud como la longitud");
+            }
+        });
+
+        // Evento para el botón de reiniciar
+        document.getElementById('resetMapBtn').addEventListener('click', function () {
+            map.setView([defaultLat, defaultLng], 13);
+            if (marker) {
+                map.removeLayer(marker);
+                marker = null;
+            }
+            document.getElementById('id_latitud').value = '';
+            document.getElementById('id_longitud').value = '';
+        });
+
+        // Evento para click en el mapa
+        map.on('click', function (e) {
+            updateMarker(e.latlng.lat, e.latlng.lng);
+        });
+
+        // Si hay valores iniciales, colocar el marcador
+        if (document.getElementById('id_latitud').value && document.getElementById('id_longitud').value) {
+            updateMarker(initialLat, initialLng);
+        }
+
+        // Forzar redimensionamiento después de que todo cargue
+        window.addEventListener('load', function () {
+            setTimeout(() => {
+                map.invalidateSize();
+                if (document.getElementById('id_latitud').value && document.getElementById('id_longitud').value) {
+                    updateMarker(initialLat, initialLng);
+                }
+            }, 100);
+        });
+    });
+</script>
+{% endblock %}

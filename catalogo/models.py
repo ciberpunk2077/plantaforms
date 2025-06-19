@@ -77,15 +77,14 @@ class Municipio(models.Model):
 class MuestraBase(models.Model):
 
     def get_upload_path_imagen(instance, filename):
-        # folder = 'imagenes/muestrabase/{}/{}/{}'.format(instance.especie.nombre,instance.especie.nombre,instance.get_genero_display())
-        # ruta = os.path.join("media/",folder)
-        # return os.path.join(ruta,filename)
-        return 'imagenes/muestrabase/{}/{}/{}/{}'.format(
-        slugify(instance.especie.familia.nombre),
-        slugify(instance.especie.nombre),
-        slugify(instance.get_genero_display()),
-        filename
-    )
+        if instance.pk:  # Si es una instancia existente
+            base_path = "imagenes/muestras/"
+            if instance.especie and instance.especie.familia:
+                base_path += f"{slugify(instance.especie.familia.nombre)}/{slugify(instance.especie.nombre)}/"
+            else:
+                base_path += "sin_especie/"
+            return f"{base_path}{instance.tipo_muestra.lower()}/{filename}"
+        return f"temp_uploads/{filename}"  # Ruta temporal para nuevas instancias
 
     GENERO_CHOICES = (
         ('M', 'Masculino'),
@@ -169,7 +168,7 @@ class MuestraBiologica(MuestraBase):
     )
 
     imagen = models.ImageField(
-        upload_to='muestras/imagenes/',  # O usa tu método get_upload_path_imagen
+        upload_to='get_upload_path_imagen',  # O usa tu método get_upload_path_imagen
         null=True,
         blank=True,
         verbose_name="Imagen de la muestra"
@@ -177,7 +176,7 @@ class MuestraBiologica(MuestraBase):
     
     # Añadir campo de imagen que falta
     def get_upload_path_imagen(self, filename):  # Quita el decorador @staticmethod
-        base_path = "imagenes/muestras/"
+        base_path = "muestras/imagenes/"
         if self.especie and self.especie.familia:
             base_path += f"{slugify(self.especie.familia.nombre)}/{slugify(self.especie.nombre)}/"
         else:

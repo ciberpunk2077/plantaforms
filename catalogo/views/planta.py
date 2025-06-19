@@ -37,20 +37,28 @@ class PlantaCreateView(MuestraCreateView):
         return reverse_lazy('catalogo:planta-list')
 
     def form_valid(self, form):
+        print("Datos del formulario:", form.cleaned_data)  # Ver qué datos llegan
+        print("Archivo de imagen recibido:", form.files.get('imagen')) 
         form.instance.tipo_muestra = 'PLANTA'
+        form.instance.uploaded_by = self.request.user  # Si tienes este campo
+        
+        if not form.cleaned_data.get('imagen'):
+            form.add_error('imagen', 'Debe subir una imagen de la planta')
+            return self.form_invalid(form)
+            
         try:
-            response = super().form_valid(form)
+            form.instance.tipo_muestra = 'PLANTA'
+            self.object = form.save()  # Esto guardará la imagen automáticamente
+            
             messages.success(
                 self.request,
-                f"Planta {form.instance.nombre_cientifico} creada exitosamente!"
+                f"Planta {self.object.nombre_cientifico} creada exitosamente!"
             )
-            return response
+            return super().form_valid(form)
+            
         except Exception as e:
-            logger.error(f"Error al guardar planta: {str(e)}")
-            messages.error(
-                self.request,
-                "Ocurrió un error al guardar la planta. Por favor intente nuevamente."
-            )
+            logger.error(f"Error al guardar planta: {str(e)}", exc_info=True)
+            messages.error(self.request, f"Error al guardar: {str(e)}")
             return self.form_invalid(form)
 
 
