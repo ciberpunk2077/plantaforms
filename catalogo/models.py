@@ -76,15 +76,7 @@ class Municipio(models.Model):
 #Muestra base
 class MuestraBase(models.Model):
 
-    def get_upload_path_imagen(instance, filename):
-        if instance.pk:  # Si es una instancia existente
-            base_path = "imagenes/muestras/"
-            if instance.especie and instance.especie.familia:
-                base_path += f"{slugify(instance.especie.familia.nombre)}/{slugify(instance.especie.nombre)}/"
-            else:
-                base_path += "sin_especie/"
-            return f"{base_path}{instance.tipo_muestra.lower()}/{filename}"
-        return f"temp_uploads/{filename}"  # Ruta temporal para nuevas instancias
+    
 
     GENERO_CHOICES = (
         ('M', 'Masculino'),
@@ -99,7 +91,7 @@ class MuestraBase(models.Model):
     nombre_cientifico = models.CharField(max_length=200)
     nombre_comun = models.CharField(max_length=200, null=True, blank=True)
     
-    numero_recolecta = models.IntegerField(unique=True)  # Único para evitar duplicados
+    numero_recolecta = models.CharField(unique=True)  # Único para evitar duplicados
     colonia = models.CharField(max_length=200, null=True, blank=True)
     localidad = models.CharField(max_length=200, null=True, blank=True)
     descripcion = models.TextField(null=True, blank=True)  # TextField para descripciones largas
@@ -149,6 +141,13 @@ class MuestraBase(models.Model):
 
 
 # En lugar de repetir el mismo código para cada modelo, podrías:
+def get_upload_path_imagen(instance, filename):
+    """Genera la ruta de almacenamiento para las imágenes"""
+    if instance.pk and instance.especie:
+        familia = slugify(instance.especie.familia.nombre) if instance.especie.familia else 'sin-familia'
+        especie = slugify(instance.especie.nombre)
+        return f"muestras/{familia}/{especie}/{filename}"
+    return f"muestras/temporales/{filename}"
 
 class MuestraBiologica(MuestraBase):
     TIPO_MUESTRA_CHOICES = [
@@ -167,22 +166,13 @@ class MuestraBiologica(MuestraBase):
         help_text="Tipo de muestra biológica"
     )
 
+
     imagen = models.ImageField(
-        upload_to='get_upload_path_imagen',  # O usa tu método get_upload_path_imagen
+        upload_to='muestras/imagenes/',
         null=True,
-        blank=True,
+        blank=False,
         verbose_name="Imagen de la muestra"
     )
-    
-    # Añadir campo de imagen que falta
-    def get_upload_path_imagen(self, filename):  # Quita el decorador @staticmethod
-        base_path = "muestras/imagenes/"
-        if self.especie and self.especie.familia:
-            base_path += f"{slugify(self.especie.familia.nombre)}/{slugify(self.especie.nombre)}/"
-        else:
-            base_path += "sin_especie/"
-        return f"{base_path}{self.tipo_muestra.lower()}/{filename}"
-    
     
     
     class Meta:

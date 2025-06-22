@@ -98,7 +98,7 @@
 
                             <div class="row g-2">
                                 <div class="col-md-6 mb-3">
-                                    <label for="id_especie" class="form-label fw-bold">Familia</label>
+                                    <label for="id_familia" class="form-label fw-bold">Familia</label>
                                     {{ form.familia }}
                                     {% if form.familia.errors %}
                                     <div class="text-danger">{{ form.familia.errors }}</div>
@@ -152,6 +152,11 @@
                             {% if form.imagen.errors %}
                             <div class="text-danger">{{ form.imagen.errors }}</div>
                             {% endif %}
+
+                            <!-- Campo oculto para mantener la referencia a la imagen existente -->
+                            {% if form.imagen.value %}
+                            <input type="hidden" name="imagen-clear" id="imagen-clear-id" value="">
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -185,29 +190,195 @@
 
 <script>
     // Evitar duplicados
-    document.querySelector('form').addEventListener('submit', function () {
-        const submitBtn = this.querySelector('button[type="submit"]');
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
-    });
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('form').addEventListener('submit', function () {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+        });
 
-    // Vista previa de imagen
-    document.getElementById('id_imagen').addEventListener('change', function (e) {
-        if (this.files && this.files[0]) {
+        //prueba inicia guardado de imagen
+        document.getElementById('id_imagen').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    document.getElementById('imagePreview').src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        //termina prueba
+
+        // Vista previa de imagen
+
+        // Vista previa de imagen
+
+        const imagePreview = document.getElementById('imagePreview');
+        const imagenClear = document.getElementById('imagen-clear-id');
+
+        // Mantener la imagen después de recarga por validación
+        if (imageInput.files && imageInput.files[0]) {
             const reader = new FileReader();
-            reader.onload = function (event) {
-                document.getElementById('imagePreview').src = event.target.result;
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
             };
-            reader.readAsDataURL(this.files[0]);
-        } else {
-            document.getElementById('imagePreview').src = "{% static 'img/placeholder.jpeg' %}";
+            reader.readAsDataURL(imageInput.files[0]);
         }
+
+        // Manejar cambio de imagen
+        imageInput.addEventListener('change', function (e) {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    imagePreview.src = event.target.result;
+                };
+                reader.readAsDataURL(this.files[0]);
+
+                // Si hay una imagen existente, marcar para no borrarla
+                if (imagenClear) {
+                    imagenClear.value = 'false';
+                }
+            } else {
+                imagePreview.src = "{% static 'img/placeholder.jpeg' %}";
+            }
+        });
+
+        // Prevenir envío si no hay imagen
+        document.querySelector('form').addEventListener('submit', function () {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+        })
     });
 
     // Mapa Leaflet
+    // Mapa Leaflet - Versión mejorada
     document.addEventListener('DOMContentLoaded', function () {
-        var map = L.map('map').setView([19.4326, -99.1332], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        // Verificar que Leaflet esté cargado
+        if (typeof L === 'undefined') {
+            console.error('Leaflet no está cargado correctamente');
+            return;
+        }
+
+        // Elementos del DOM
+        const mapElement = document.getElementById('map');
+        const latInput = document.getElementById('id_latitud');
+        const lngInput = document.getElementById('id_longitud');
+        const locateBtn = document.getElementById('locateBtn');
+        const resetMapBtn = document.getElementById('resetMapBtn');
+
+        // Coordenadas iniciales (México City como fallback)
+        const defaultLat = 19.4326;
+        const defaultLng = -99.1332;
+
+        // Obtener valores iniciales del formulario o usar defaults
+        let initialLat = defaultLat;
+        let initialLng = defaultLng;
+
+        if (latInput && latInput.value) initialLat = parseFloat(latInput.value);
+        if (lngInput && lngInput.value) initialLng = parseFloat(lngInput.value);
+
+        // Inicializar el mapa
+        const map = L.map('map').setView([initialLat, initialLng], 13);
+
+        // Añadir capa base
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Crear un marcador (inicialmente oculto)
+        let marker = null;
+
+        // Si hay coordenadas en el formulario, mostrar marcador
+        if (latInput.value && lngInput.value) {
+            marker = L.marker([initialLat, initialLng]).addTo(map)
+                .bindPopup('Ubicación actual');
+        }
+
+        // Función para actualizar las coordenadas en el formulario
+        function updateFormFields(lat, lng) {
+            if (latInput) latInput.value = lat;
+            if (lngInput) lngInput.value = lng;
+        }
+
+        // Manejador de clic en el mapa
+        function onMapClick(e) {
+            const { lat, lng } = e.latlng;
+
+            // Actualizar o crear el marcador
+            if (marker) {
+                marker.setLatLng([lat, lng]);
+            } else {
+                marker = L.marker([lat, lng]).addTo(map)
+                    .bindPopup('Ubicación seleccionada');
+            }
+
+            // Actualizar campos del formulario
+            updateFormFields(lat, lng);
+        }
+
+        // Evento de clic en el mapa
+        map.on('click', onMapClick);
+
+        // Botón para geolocalización
+        locateBtn.addEventListener('click', function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        const { latitude, longitude } = position.coords;
+                        map.setView([latitude, longitude], 15);
+
+                        // Crear o mover marcador
+                        if (marker) {
+                            marker.setLatLng([latitude, longitude]);
+                        } else {
+                            marker = L.marker([latitude, longitude]).addTo(map)
+                                .bindPopup('Tu ubicación actual');
+                        }
+
+                        // Actualizar campos del formulario
+                        updateFormFields(latitude, longitude);
+                    },
+                    function (error) {
+                        console.error("Error en geolocalización: ", error);
+                        alert("No se pudo obtener tu ubicación. Error: " + error.message);
+                    }
+                );
+            } else {
+                alert("Tu navegador no soporta geolocalización");
+            }
+        });
+
+        // Botón para reiniciar el mapa
+        resetMapBtn.addEventListener('click', function () {
+            map.setView([defaultLat, defaultLng], 13);
+            if (marker) {
+                map.removeLayer(marker);
+                marker = null;
+            }
+            updateFormFields('', '');
+        });
+
+        // Sincronizar cambios en los campos con el mapa
+        if (latInput && lngInput) {
+            [latInput, lngInput].forEach(input => {
+                input.addEventListener('change', function () {
+                    const lat = parseFloat(latInput.value) || defaultLat;
+                    const lng = parseFloat(lngInput.value) || defaultLng;
+
+                    map.setView([lat, lng], 13);
+
+                    if (marker) {
+                        marker.setLatLng([lat, lng]);
+                    } else if (latInput.value && lngInput.value) {
+                        marker = L.marker([lat, lng]).addTo(map)
+                            .bindPopup('Ubicación actual');
+                    }
+                });
+            });
+        }
     });
 </script>
 {% endblock %}

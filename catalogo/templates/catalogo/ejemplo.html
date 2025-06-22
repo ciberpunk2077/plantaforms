@@ -159,7 +159,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="card-title mb-3">Ubicación</h5>
-                        <div id="map" class="rounded" style="width: 100%; height: 400px;"></div>
+                        <div id="map" class="rounded" style="width: 100%; height: 400px;  position: relative;"></div>
                         <div class="mt-3">
                             <button type="button" id="locateBtn" class="btn btn-sm btn-outline-success">
                                 <i class="fas fa-map-marker-alt me-2"></i>Marcar ubicación
@@ -177,9 +177,11 @@
 {% endblock %}
 
 {% block extra_js %}
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 <!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
     // Evitar duplicados
@@ -203,100 +205,131 @@
     });
 
     // Mapa Leaflet
+    // Mapa Leaflet - Versión mejorada
     document.addEventListener('DOMContentLoaded', function () {
+        // Verificar que Leaflet esté cargado
+        if (typeof L === 'undefined') {
+            console.error('Leaflet no está cargado correctamente');
+            return;
+        }
+
+        // Elementos del DOM
+        const mapElement = document.getElementById('map');
+        const latInput = document.getElementById('id_latitud');
+        const lngInput = document.getElementById('id_longitud');
+        const locateBtn = document.getElementById('locateBtn');
+        const resetMapBtn = document.getElementById('resetMapBtn');
+
+        // Coordenadas iniciales (México City como fallback)
         const defaultLat = 19.4326;
         const defaultLng = -99.1332;
 
-        const initialLat = parseFloat(document.getElementById('id_latitud').value) || defaultLat;
-        const initialLng = parseFloat(document.getElementById('id_longitud').value) || defaultLng;
+        // Obtener valores iniciales del formulario o usar defaults
+        let initialLat = defaultLat;
+        let initialLng = defaultLng;
+
+        if (latInput && latInput.value) initialLat = parseFloat(latInput.value);
+        if (lngInput && lngInput.value) initialLng = parseFloat(lngInput.value);
 
         // Inicializar el mapa
         const map = L.map('map').setView([initialLat, initialLng], 13);
 
-        // Añadir capa de OpenStreetMap
+        // Añadir capa base
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            maxZoom: 19
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Añadir controles
-        L.control.zoom({ position: 'topright' }).addTo(map);
-        L.control.scale({ imperial: false, metric: true }).addTo(map);
-
+        // Crear un marcador (inicialmente oculto)
         let marker = null;
 
-        function updateMarker(lat, lng) {
+        // Si hay coordenadas en el formulario, mostrar marcador
+        if (latInput.value && lngInput.value) {
+            marker = L.marker([initialLat, initialLng]).addTo(map)
+                .bindPopup('Ubicación actual');
+        }
+
+        // Función para actualizar las coordenadas en el formulario
+        function updateFormFields(lat, lng) {
+            if (latInput) latInput.value = lat;
+            if (lngInput) lngInput.value = lng;
+        }
+
+        // Manejador de clic en el mapa
+        function onMapClick(e) {
+            const { lat, lng } = e.latlng;
+
+            // Actualizar o crear el marcador
             if (marker) {
-                map.removeLayer(marker);
+                marker.setLatLng([lat, lng]);
+            } else {
+                marker = L.marker([lat, lng]).addTo(map)
+                    .bindPopup('Ubicación seleccionada');
             }
 
-            marker = L.marker([lat, lng], { draggable: true }).addTo(map)
-                .bindPopup('Ubicación seleccionada')
-                .openPopup();
-
-            marker.on('dragend', function (e) {
-                const newPos = e.target.getLatLng();
-                updateFormFields(newPos.lat, newPos.lng);
-            });
-
-            map.setView([lat, lng], 15);
+            // Actualizar campos del formulario
             updateFormFields(lat, lng);
         }
 
-        function updateFormFields(lat, lng) {
-            document.getElementById('id_latitud').value = lat.toFixed(6);
-            document.getElementById('id_longitud').value = lng.toFixed(6);
-        }
+        // Evento de clic en el mapa
+        map.on('click', onMapClick);
 
-        // Evento para el botón de marcar ubicación
-        document.getElementById('locateBtn').addEventListener('click', function () {
-            const latInput = document.getElementById('id_latitud').value;
-            const lngInput = document.getElementById('id_longitud').value;
+        // Botón para geolocalización
+        locateBtn.addEventListener('click', function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        const { latitude, longitude } = position.coords;
+                        map.setView([latitude, longitude], 15);
 
-            if (latInput && lngInput) {
-                const lat = parseFloat(latInput);
-                const lng = parseFloat(lngInput);
+                        // Crear o mover marcador
+                        if (marker) {
+                            marker.setLatLng([latitude, longitude]);
+                        } else {
+                            marker = L.marker([latitude, longitude]).addTo(map)
+                                .bindPopup('Tu ubicación actual');
+                        }
 
-                if (!isNaN(lat) && !isNaN(lng)) {
-                    updateMarker(lat, lng);
-                } else {
-                    alert("Por favor ingresa coordenadas válidas (números)");
-                }
+                        // Actualizar campos del formulario
+                        updateFormFields(latitude, longitude);
+                    },
+                    function (error) {
+                        console.error("Error en geolocalización: ", error);
+                        alert("No se pudo obtener tu ubicación. Error: " + error.message);
+                    }
+                );
             } else {
-                alert("Por favor ingresa tanto la latitud como la longitud");
+                alert("Tu navegador no soporta geolocalización");
             }
         });
 
-        // Evento para el botón de reiniciar
-        document.getElementById('resetMapBtn').addEventListener('click', function () {
+        // Botón para reiniciar el mapa
+        resetMapBtn.addEventListener('click', function () {
             map.setView([defaultLat, defaultLng], 13);
             if (marker) {
                 map.removeLayer(marker);
                 marker = null;
             }
-            document.getElementById('id_latitud').value = '';
-            document.getElementById('id_longitud').value = '';
+            updateFormFields('', '');
         });
 
-        // Evento para click en el mapa
-        map.on('click', function (e) {
-            updateMarker(e.latlng.lat, e.latlng.lng);
-        });
+        // Sincronizar cambios en los campos con el mapa
+        if (latInput && lngInput) {
+            [latInput, lngInput].forEach(input => {
+                input.addEventListener('change', function () {
+                    const lat = parseFloat(latInput.value) || defaultLat;
+                    const lng = parseFloat(lngInput.value) || defaultLng;
 
-        // Si hay valores iniciales, colocar el marcador
-        if (document.getElementById('id_latitud').value && document.getElementById('id_longitud').value) {
-            updateMarker(initialLat, initialLng);
+                    map.setView([lat, lng], 13);
+
+                    if (marker) {
+                        marker.setLatLng([lat, lng]);
+                    } else if (latInput.value && lngInput.value) {
+                        marker = L.marker([lat, lng]).addTo(map)
+                            .bindPopup('Ubicación actual');
+                    }
+                });
+            });
         }
-
-        // Forzar redimensionamiento después de que todo cargue
-        window.addEventListener('load', function () {
-            setTimeout(() => {
-                map.invalidateSize();
-                if (document.getElementById('id_latitud').value && document.getElementById('id_longitud').value) {
-                    updateMarker(initialLat, initialLng);
-                }
-            }, 100);
-        });
     });
 </script>
 {% endblock %}

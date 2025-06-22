@@ -1,9 +1,9 @@
-from django.views.generic import FormView
+
 
 import logging
 from django.urls import reverse_lazy
 from django.contrib import messages
-from ..forms.planta import PlantaForm
+from ..forms.alga import AlgaForm
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from ..models import Especie
@@ -12,13 +12,13 @@ from .muestra import MuestraCreateView, MuestraListView, MuestraDetailView, Mues
 logger = logging.getLogger(__name__)
 
 
-class PlantaCreateView(MuestraCreateView):
+class AlgaCreateView(MuestraCreateView):
     """
     Vista especializada para crear muestras de tipo PLANTA
     """
-    form_class = PlantaForm
-    tipo_fijo = 'PLANTA'
-    template_name = 'catalogo/planta_form.html'
+    form_class = AlgaForm
+    tipo_fijo = 'ALGA'
+    template_name = 'catalogo/alga_form.html'
     
     def get_form_kwargs(self):
         """Asegura que el tipo PLANTA se pase al formulario"""
@@ -29,33 +29,41 @@ class PlantaCreateView(MuestraCreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'titulo_pagina': "Nueva Planta",
-            'es_planta': True,
-            'subtitulo': "Complete los datos de la planta recolectada"
+            'titulo_pagina': "Nueva Alga",
+            'es_alga': True,
+            'subtitulo': "Complete los datos de la alga recolectada"
         })
         return context
     
     def get_success_url(self):
-        return reverse_lazy('catalogo:planta-list')
+        return reverse_lazy('catalogo:alga-list')
 
     def form_valid(self, form):
-        print("Antes de guardar - FILES:", self.request.FILES)  # Debug
-        print("Antes de guardar - POST:", self.request.POST)    # Debug
-        
+         # Verificar que se haya subido una imagen
         if 'imagen' not in self.request.FILES:
-            print("¡No se recibió la imagen!")  # Debug importante
+            form.add_error('imagen', 'Debe subir una imagen de la muestra')
             return self.form_invalid(form)
             
+        # Guardar el objeto
+        self.object = form.save()
+        
+        # Debug: Verificar que la imagen se guardó
+        print(f"Imagen guardada en: {self.object.imagen.path}")
+        print(f"URL de la imagen: {self.object.imagen.url}")
+        
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('catalogo:alga-list')
 
 
-class PlantaListView(MuestraListView):
+class AlgaListView(MuestraListView):
     """Listado específico para plantas"""
-    template_name = 'catalogo/planta_list.html'
+    template_name = 'catalogo/alga_list.html'
     
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(tipo_muestra='PLANTA').select_related(
+        return queryset.filter(tipo_muestra='ALGA').select_related(
             'especie', 'especie__familia', 'municipio'
         )
     
@@ -68,25 +76,25 @@ class PlantaListView(MuestraListView):
         return context
 
 
-class PlantaDetailView(MuestraDetailView):
+class AlgaDetailView(MuestraDetailView):
     """Detalle específico para plantas"""
-    template_name = 'catalogo/planta_detail.html'
+    template_name = 'catalogo/alga_detail.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        planta = self.get_object()
+        alga = self.get_object()
         context.update({
-            'titulo_pagina': f"Detalle de {planta.nombre_cientifico}",
-            'es_planta': True,
+            'titulo_pagina': f"Detalle de {alga.nombre_cientifico}",
+            'es_alga': True,
             'subtitulo': "Información detallada de la planta"
         })
         return context
 
 
-class PlantaUpdateView(MuestraUpdateView):
+class AlgaUpdateView(MuestraUpdateView):
     """Vista para editar plantas"""
-    template_name = 'catalogo/planta_form.html'
-    tipo_fijo = 'PLANTA'
+    template_name = 'catalogo/alga_form.html'
+    tipo_fijo = 'ALGA'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -94,7 +102,7 @@ class PlantaUpdateView(MuestraUpdateView):
         return context
 
 
-class PlantaDeleteView(MuestraDeleteView):
+class AlgaDeleteView(MuestraDeleteView):
     """Vista para eliminar plantas"""
     success_url = reverse_lazy('catalogo:planta-list')
     

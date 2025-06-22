@@ -4,7 +4,7 @@ from .muestra import MuestraBiologicaForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
 
-class PlantaForm(MuestraBiologicaForm):
+class AlgaForm(MuestraBiologicaForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     # Campo imagen personalizado
@@ -56,11 +56,15 @@ class PlantaForm(MuestraBiologicaForm):
     
     class Meta(MuestraBiologicaForm.Meta):
         fields = [
-            'tipo_muestra', 'nombre_cientifico', 'nombre_comun', 'familia', 'especie',
-            'genero', 'fecha', 'numero_recolecta', 'municipio', 'colonia', 'localidad',
-            'descripcion', 'nombre_colector', 'imagen', 'latitud', 'longitud'
+            'tipo_muestra', 'nombre_cientifico', 'familia', 'especie',
+            'municipio',  'imagen', 
         ]
         widgets = {
+            'tipo_muestra': forms.HiddenInput(),
+            'imagen': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+                'accept': 'image/*',
+            }),
             'latitud': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Ej: 17.98996809279243',
@@ -75,16 +79,11 @@ class PlantaForm(MuestraBiologicaForm):
             }),
 
             'nombre_cientifico': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Rosa rubiginosa'}),
-            'nombre_comun': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Rosa mosqueta'}),
-            'numero_recolecta': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: INV-123'}),
-            'colonia': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: san jose'}),
-            'localidad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: villahermosa'}),
-            'municipio': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Ej: centro'}),
-            'nombre_colector': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: El PEPE'}),
             
-            'fecha': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-            'descripcion': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
-            'tipo_muestra': forms.HiddenInput(),
+            'municipio': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Ej: centro'}),
+            
+            
+
             # No definimos 'imagen' aquí porque ya está definido arriba
         }
 
@@ -98,17 +97,12 @@ class PlantaForm(MuestraBiologicaForm):
         self.helper.layout = Layout(
             'tipo_muestra',
             'nombre_cientifico',
-            'nombre_comun',
+            
             'familia',
             'especie',
-            'genero',
-            'fecha',
-            'numero_recolecta',
+            
             'municipio',
-            'colonia',
-            'localidad',
-            'descripcion',
-            'nombre_colector',
+            
             'imagen',
             'latitud',
             'longitud',
@@ -116,7 +110,7 @@ class PlantaForm(MuestraBiologicaForm):
         )
         
         # Especializaciones para plantas
-        self.fields['nombre_comun'].required = True
+        
         
         # Manejo seguro de familia y especie
         if 'familia' in self.data:
