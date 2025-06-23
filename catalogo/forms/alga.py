@@ -16,7 +16,17 @@ class AlgaForm(MuestraBiologicaForm):
             'id': 'id_imagen'
         })
         self.fields['imagen'].required = True
+    def save(self, commit=True):
+        instance = super().save(commit=False)
         
+        # Asigna automáticamente la familia desde la especie si existe
+        if self.cleaned_data.get('especie'):
+            instance.familia = self.cleaned_data['especie'].familia
+        
+        if commit:
+            instance.save()
+        
+        return instance    
     
 
     # Campo familia (solo una definición)
@@ -56,8 +66,9 @@ class AlgaForm(MuestraBiologicaForm):
     
     class Meta(MuestraBiologicaForm.Meta):
         fields = [
-            'tipo_muestra', 'nombre_cientifico', 'familia', 'especie',
-            'municipio',  'imagen', 
+            'tipo_muestra', 'nombre_cientifico', 'nombre_comun', 'familia', 'especie',
+            'genero', 'fecha', 'numero_recolecta', 'municipio',  'imagen', 'colonia', 
+            'localidad', 'descripcion', 'nombre_colector','latitud', 'longitud'
         ]
         widgets = {
             'tipo_muestra': forms.HiddenInput(),
@@ -79,9 +90,15 @@ class AlgaForm(MuestraBiologicaForm):
             }),
 
             'nombre_cientifico': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Rosa rubiginosa'}),
-            
+            'nombre_comun': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Rosa mosqueta'}),
+            'numero_recolecta': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: INV-123'}),
+            'colonia': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: san jose'}),
+            'localidad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: villahermosa'}),
             'municipio': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Ej: centro'}),
-            
+            'nombre_colector': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: El PEPE'}),
+            'fecha': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
+            'tipo_muestra': forms.HiddenInput(),
             
 
             # No definimos 'imagen' aquí porque ya está definido arriba
@@ -90,27 +107,7 @@ class AlgaForm(MuestraBiologicaForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         tipo_muestra = kwargs.pop('tipo_muestra', None)
-        super().__init__(*args, **kwargs)
-        
-        # Configuración de crispy forms
-        self.helper = FormHelper()
-        self.helper.layout = Layout(
-            'tipo_muestra',
-            'nombre_cientifico',
-            
-            'familia',
-            'especie',
-            
-            'municipio',
-            
-            'imagen',
-            'latitud',
-            'longitud',
-            Submit('submit', 'Guardar', css_class='btn btn-primary')
-        )
-        
-        # Especializaciones para plantas
-        
+        super().__init__(*args, **kwargs)      
         
         # Manejo seguro de familia y especie
         if 'familia' in self.data:

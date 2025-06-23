@@ -3,13 +3,7 @@
 
 {% block extra_css %}
 <style>
-    .img-tabla {
-        width: 10px;
-        height: 10px;
-        object-fit: cover;
-        border-radius: 4px;
 
-    }
 </style>
 {% endblock %}
 
@@ -45,12 +39,16 @@
                             <tr>
                                 <td>{{ alga.nombre_cientifico }}</td>
 
-                                <td>{{ alga.familia.nombre|default:"-" }}</td>
+                                <td>{{ alga.familia.nombre|default:"-" }} (ID: {{ alga.familia.id|default:"None" }})
+                                </td>
 
                                 <td>
                                     {% if alga.imagen %}
-                                    <img src="{{ alga.imagen.url }}" class="img-tabla"
-                                        alt="{{ alga.nombre_cientifico }}">
+                                    <div class="img-tabla-container">
+                                        <img src="{{ alga.imagen.url }}" class="img-tabla"
+                                            alt="{{ alga.nombre_cientifico }}"
+                                            style="width: 80px; height: 80px; object-fit: cover;">
+                                    </div>
                                     {% else %}
                                     <span class="text-muted">-</span>
                                     {% endif %}

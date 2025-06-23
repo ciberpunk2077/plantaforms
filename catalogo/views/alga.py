@@ -44,6 +44,11 @@ class AlgaCreateView(MuestraCreateView):
             form.add_error('imagen', 'Debe subir una imagen de la muestra')
             return self.form_invalid(form)
             
+        
+        # Asigna automáticamente la familia desde la especie si es necesario
+        if form.cleaned_data.get('especie') and not form.cleaned_data.get('familia'):
+            form.instance.familia = form.cleaned_data['especie'].familia
+            
         # Guardar el objeto
         self.object = form.save()
         
@@ -60,6 +65,12 @@ class AlgaCreateView(MuestraCreateView):
 class AlgaListView(MuestraListView):
     """Listado específico para plantas"""
     template_name = 'catalogo/alga_list.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(tipo_muestra='ALGA').select_related(
+            'familia', 'especie', 'especie__familia', 'municipio'
+        )
     
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -79,6 +90,7 @@ class AlgaListView(MuestraListView):
 class AlgaDetailView(MuestraDetailView):
     """Detalle específico para plantas"""
     template_name = 'catalogo/alga_detail.html'
+    context_object_name = 'alga'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -104,11 +116,19 @@ class AlgaUpdateView(MuestraUpdateView):
 
 class AlgaDeleteView(MuestraDeleteView):
     """Vista para eliminar plantas"""
-    success_url = reverse_lazy('catalogo:planta-list')
+    success_url = reverse_lazy('catalogo:alga-list')
     
     def delete(self, request, *args, **kwargs):
         response = super().delete(request, *args, **kwargs)
-        messages.success(request, "Planta eliminada correctamente")
+        messages.success(request, "Alga eliminada correctamente")
+
+        alga = self.get_object()
+        
+        if alga.imagen:  # Si hay una imagen, bórrala del sistema de archivos
+            alga.imagen.delete(save=False)
+        
+        response = super().delete(request, *args, **kwargs)
+        messages.success(request, "Alga eliminada correctamente")  # Mensaje de confirmación
         return response
 
 

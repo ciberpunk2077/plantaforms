@@ -102,15 +102,15 @@ class MuestraBase(models.Model):
         help_text="Fecha de recolección de la muestra"
     )
     latitud = models.DecimalField(
-        max_digits=9, 
-        decimal_places=6, 
+        max_digits=50, 
+        decimal_places=47, 
         null=True, 
         blank=True,
         validators=[MinValueValidator(-90), MaxValueValidator(90)]  # Validación de rango
     )
     longitud = models.DecimalField(
-        max_digits=9, 
-        decimal_places=6, 
+        max_digits=50, 
+        decimal_places=47, 
         null=True, 
         blank=True,
         validators=[MinValueValidator(-180), MaxValueValidator(180)]
@@ -172,6 +172,15 @@ class MuestraBiologica(MuestraBase):
         null=True,
         blank=False,
         verbose_name="Imagen de la muestra"
+    )
+
+    # Agrega este campo
+    familia = models.ForeignKey(
+        Familia,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Familia"
     )
     
     
