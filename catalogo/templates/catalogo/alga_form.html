@@ -28,14 +28,14 @@
                             <div class="mb-3">
                                 <label for="{{ form.nombre_cientifico.id_for_label }}" class="form-label fw-bold">Nombre
                                     Científico</label>
-                                {{ form.nombre_cientifico }}
+                                {% render_field form.nombre_cientifico class="form-control" %}
                                 {% if form.nombre_cientifico.errors %}
                                 <div class="text-danger">{{ form.nombre_cientifico.errors }}</div>
                                 {% endif %}
                             </div>
                             <div class="mb-3">
                                 <label for="{{ form.imagen.id_for_label }}" class="form-label fw-bold">Imagen</label>
-                                {{ form.imagen }}
+                                {% render_field form.imagen class="form-control" %}
                                 <small class="text-muted">Formatos soportados: JPG, PNG, GIF</small>
                                 {% if form.imagen.errors %}
                                 <div class="text-danger">{{ form.imagen.errors }}</div>
@@ -44,7 +44,7 @@
                             <div class="mb-3">
                                 <label for="{{ form.nombre_comun.id_for_label }}" class="form-label fw-bold">Nombre
                                     Común</label>
-                                {{ form.nombre_comun }}
+                                {% render_field form.nombre_comun class="form-control" %}
                                 {% if form.nombre_comun.errors %}
                                 <div class="text-danger">{{ form.nombre_comun.errors }}</div>
                                 {% endif %}
@@ -53,13 +53,13 @@
                             <div class="mb-3">
                                 <label for="{{ form.fecha.id_for_label }}" class="form-label fw-bold">Fecha de
                                     Recolección</label>
-                                {{ form.fecha }}
+                                {% render_field form.fecha class="form-control" %}
                             </div>
 
                             <div class="mb-3">
                                 <label for="{{ form.numero_recolecta.id_for_label }}" class="form-label fw-bold">Número
                                     de Recolecta</label>
-                                {{ form.numero_recolecta }}
+                                {% render_field form.numero_recolecta class="form-control" %}
                                 {% if form.numero_recolecta.errors %}
                                 <div class="text-danger">{{ form.numero_recolecta.errors }}</div>
                                 {% endif %}
@@ -69,12 +69,12 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="{{ form.colonia.id_for_label }}"
                                         class="form-label fw-bold">Colonia</label>
-                                    {{ form.colonia }}
+                                    {% render_field form.colonia class="form-control" %}
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="{{ form.localidad.id_for_label }}"
                                         class="form-label fw-bold">Localidad</label>
-                                    {{ form.localidad }}
+                                    {% render_field form.localidad class="form-control" %}
                                 </div>
                             </div>
 
@@ -82,25 +82,26 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="{{ form.latitud.id_for_label }}"
                                         class="form-label fw-bold">Latitud</label>
-                                    {{ form.latitud }}
+                                    {% render_field form.latitud class="form-control" %}
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="{{ form.longitud.id_for_label }}"
                                         class="form-label fw-bold">Longitud</label>
-                                    {{ form.longitud }}
+                                    {% render_field form.longitud class="form-control" %}
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="{{ form.descripcion.id_for_label }}"
                                     class="form-label fw-bold">Descripción</label>
-                                {{ form.descripcion }}
+                                {% render_field form.descripcion class="form-control" %}
                             </div>
 
                             <div class="mb-3">
                                 <label for="{{ form.nombre_colector.id_for_label }}" class="form-label fw-bold">Nombre
                                     del Recolector</label>
-                                {{ form.nombre_colector }}
+                                {% render_field form.nombre_colector class="form-control" %}
+
                             </div>
 
 
@@ -108,14 +109,14 @@
                             <div class="row g-2">
                                 <div class="col-md-6 mb-3">
                                     <label for="id_familia" class="form-label fw-bold">Familia</label>
-                                    {{ form.familia }}
+                                    {% render_field form.familia class="form-control" %}
                                     {% if form.familia.errors %}
                                     <div class="text-danger">{{ form.familia.errors }}</div>
                                     {% endif %}
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="id_especie" class="form-label fw-bold">Especie</label>
-                                    {{ form.especie }}
+                                    {% render_field form.especie class="form-control" %}
                                     {% if form.especie.errors %}
                                     <div class="text-danger">{{ form.especie.errors }}</div>
                                     {% endif %}
@@ -125,7 +126,7 @@
                             <div class="row g-2">
                                 <div class="col-md-6 mb-3">
                                     <label for="id_especie" class="form-label fw-bold">Municipio</label>
-                                    {{ form.municipio }}
+                                    {% render_field form.municipio class="form-control" %}
                                     {% if form.municipio.errors %}
                                     <div class="text-danger">{{ form.municipio.errors }}</div>
                                     {% endif %}

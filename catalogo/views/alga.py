@@ -6,7 +6,7 @@ from django.contrib import messages
 from ..forms.alga import AlgaForm
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from ..models import Especie
+from ..models import Especie, Familia
 from .muestra import MuestraCreateView, MuestraListView, MuestraDetailView, MuestraUpdateView, MuestraDeleteView
 
 logger = logging.getLogger(__name__)
@@ -107,6 +107,7 @@ class AlgaUpdateView(MuestraUpdateView):
     """Vista para editar plantas"""
     template_name = 'catalogo/alga_form.html'
     tipo_fijo = 'ALGA'
+    success_url = reverse_lazy('catalogo:alga-list')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

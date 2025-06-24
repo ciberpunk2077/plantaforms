@@ -78,7 +78,7 @@ class MuestraUpdateView(UpdateView):
     model = MuestraBiologica
     form_class = MuestraBiologicaForm
     template_name = 'catalogo/muestra_form.html'
-    success_url = reverse_lazy('catalogo:muestra-list')
+    # success_url = reverse_lazy('catalogo:muestra-list')
 
     def form_valid(self, form):
         messages.success(self.request, "Muestra actualizada exitosamente.")
