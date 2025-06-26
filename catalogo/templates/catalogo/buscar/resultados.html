@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Resultados para "{{ query }}"</h2>
+
+{% if resultados %}
+<main class="main-content" id="mainContent" style="margin-top: 70px;">
+    <div class="row">
+        {% for muestra in resultados %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <!-- Adapta esto a tus campos -->
+                <div class="card-body">
+                    <h5 class="card-title">{{ muestra.nombre_cientifico }}</h5>
+                    <p class="card-text">
+                        <strong>Tipo:</strong> {{ muestra.get_tipo_muestra_display }}<br>
+                        <strong>Familia:</strong> {{ muestra.familia.nombre|default:"-" }}
+                        <strong>Familia:</strong> {{ muestra.imagen|default:"-" }}
+                    </p>
+                    {% if muestra.tipo_muestra == 'ALGA' %}
+                    <a href="{% url 'catalogo:alga-detail' muestra.id %}" class="btn btn-sm btn-info">Ver alga</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-warning">No se encontraron resultados.</div>
+    {% endif %}
+</main>
+{% endblock %}

@@ -11,10 +11,13 @@ from .views.familia import (  # Cambia este import
     EspecieCreateView, EspecieUpdateView, EspecieListView
 )
 from .views.muestra import MuestraListView
+from catalogo.views.buscar import buscar_muestras
 
 app_name = 'catalogo'
 
 urlpatterns = [
+
+    path('buscar/', buscar_muestras, name='buscar_muestras'),
 
     # URLs para Familia
     path('familia/', FamiliaListView.as_view(), name='familia_list'),
