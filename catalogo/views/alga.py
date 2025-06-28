@@ -78,13 +78,13 @@ class AlgaListView(MuestraListView):
             'especie', 'especie__familia', 'municipio'
         )
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            'titulo_pagina': "Listado de Plantas",
-            'subtitulo': "Plantas registradas en el sistema"
-        })
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context.update({
+    #         'titulo_pagina': "Listado de Plantas",
+    #         'subtitulo': "Plantas registradas en el sistema"
+    #     })
+    #     return context
 
 
 class AlgaDetailView(MuestraDetailView):

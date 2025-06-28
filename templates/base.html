@@ -66,6 +66,24 @@
 
     {% block extra_js %}
     {% endblock %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputSearch = document.querySelector('#search-input');
+
+            inputSearch.addEventListener('input', function (e) {
+                const query = e.target.value;
+                const tipo = "{{ request.GET.tipo }}";  // Filtro tipo desde Django
+
+                fetch(`{% url 'catalogo:buscar_muestras' %}?q=${query}&tipo=${tipo}`)
+                    .then(response => response.text())
+                    .then(html => {
+                        // Actualiza solo la sección de resultados (ej: un div con id="resultados")
+                        document.getElementById('resultados').innerHTML = html;
+                    });
+            });
+        });
+    </script>
 </body>
 
 </html>

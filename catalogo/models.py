@@ -175,13 +175,13 @@ class MuestraBiologica(MuestraBase):
     )
 
     # Agrega este campo
-    familia = models.ForeignKey(
-        Familia,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name="Familia"
-    )
+    # familia = models.ForeignKey(
+    #     Familia,
+    #     on_delete=models.SET_NULL,
+    #     null=True,
+    #     blank=True,
+    #     verbose_name="Familia"
+    # )
     
     
     class Meta:

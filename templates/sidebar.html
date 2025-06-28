@@ -25,12 +25,23 @@
 
     <div class="sidebar-menu-container">
         <div class="sidebar-search px-3 mb-3">
-            <div class="input-group">
+            <!-- <div class="input-group">
                 <input type="text" class="form-control bg-dark text-white border-0" placeholder="Buscar especie...">
                 <button class="btn btn-success" type="button">
                     <i class="fa fa-search"></i>
                 </button>
-            </div>
+            </div> -->
+            <form id="search-form" method="get" action="{% url 'catalogo:buscar_muestras' %}">
+                <div class="input-group">
+                    <input type="text" id="search-input" name="q" class="form-control bg-dark text-white border-0"
+                        placeholder="Buscar especie..." value="{{ request.GET.q }}">
+                    <button class="btn btn-success" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+                <!-- Campo oculto para el tipo (si es necesario) -->
+                <input type="hidden" name="tipo" value="{{ request.GET.tipo }}">
+            </form>
         </div>
 
 
