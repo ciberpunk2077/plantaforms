@@ -1,4 +1,4 @@
-from django.views.generic import FormView
+
 
 import logging
 from django.urls import reverse_lazy
@@ -6,7 +6,7 @@ from django.contrib import messages
 from ..forms.planta import PlantaForm
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from ..models import Especie
+from ..models import Especie, Familia
 from .muestra import MuestraCreateView, MuestraListView, MuestraDetailView, MuestraUpdateView, MuestraDeleteView
 
 logger = logging.getLogger(__name__)
@@ -39,19 +39,38 @@ class PlantaCreateView(MuestraCreateView):
         return reverse_lazy('catalogo:planta-list')
 
     def form_valid(self, form):
-        print("Antes de guardar - FILES:", self.request.FILES)  # Debug
-        print("Antes de guardar - POST:", self.request.POST)    # Debug
-        
-        if 'imagen' not in self.request.FILES:
-            print("¡No se recibió la imagen!")  # Debug importante
-            return self.form_invalid(form)
+         # Verificar que se haya subido una imagen
+        # if 'imagen' not in self.request.FILES:
+        #     form.add_error('imagen', 'Debe subir una imagen de la muestra')
+        #     return self.form_invalid(form)
             
+        
+        # Asigna automáticamente la familia desde la especie si es necesario
+        if form.cleaned_data.get('especie') and not form.cleaned_data.get('familia'):
+            form.instance.familia = form.cleaned_data['especie'].familia
+            
+        # Guardar el objeto
+        self.object = form.save()
+        
+        # Debug: Verificar que la imagen se guardó
+        print(f"Imagen guardada en: {self.object.imagen.path}")
+        print(f"URL de la imagen: {self.object.imagen.url}")
+        
         return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('catalogo:planta-list')
 
 
 class PlantaListView(MuestraListView):
     """Listado específico para plantas"""
     template_name = 'catalogo/planta_list.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(tipo_muestra='PLANTA').select_related(
+            'familia', 'especie', 'especie__familia', 'municipio'
+        )
     
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -59,18 +78,19 @@ class PlantaListView(MuestraListView):
             'especie', 'especie__familia', 'municipio'
         )
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            'titulo_pagina': "Listado de Plantas",
-            'subtitulo': "Plantas registradas en el sistema"
-        })
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context.update({
+    #         'titulo_pagina': "Listado de Plantas",
+    #         'subtitulo': "Plantas registradas en el sistema"
+    #     })
+    #     return context
 
 
 class PlantaDetailView(MuestraDetailView):
     """Detalle específico para plantas"""
     template_name = 'catalogo/planta_detail.html'
+    context_object_name = 'planta'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -86,11 +106,32 @@ class PlantaDetailView(MuestraDetailView):
 class PlantaUpdateView(MuestraUpdateView):
     """Vista para editar plantas"""
     template_name = 'catalogo/planta_form.html'
-    tipo_fijo = 'PLANTA'
+    form_class = PlantaForm
+    # tipo_fijo = 'ALGA'
+    success_url = reverse_lazy('catalogo:planta-list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['tipo_muestra'] = 'PLANTA'
+        return kwargs
+
+        # Asegúrate de pasar la instancia existente al formulario
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'titulo_pagina': f"Editar {self.object.nombre_cientifico}",
+            'es_planta': True,
+        })
+        return context
+        
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo_pagina'] = f"Editar {self.object.nombre_cientifico}"
+        context.update({
+            'titulo_pagina': f"Editar {self.object.nombre_cientifico}",
+            'es_planta': True,
+            'subtitulo': "Editar los datos de la planta"
+        })
         return context
 
 
@@ -101,6 +142,14 @@ class PlantaDeleteView(MuestraDeleteView):
     def delete(self, request, *args, **kwargs):
         response = super().delete(request, *args, **kwargs)
         messages.success(request, "Planta eliminada correctamente")
+
+        planta = self.get_object()
+        
+        if planta.imagen:  # Si hay una imagen, bórrala del sistema de archivos
+            planta.imagen.delete(save=False)
+        
+        response = super().delete(request, *args, **kwargs)
+        messages.success(request, "Planta eliminada correctamente")  # Mensaje de confirmación
         return response
 
 

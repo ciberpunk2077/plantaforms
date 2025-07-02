@@ -35,3 +35,42 @@ def load_especies(request):
     
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+    
+@login_required
+@require_POST
+def ajax_add_familia(request):
+    nombre = request.POST.get('nombre')
+    if not nombre:
+        return JsonResponse({'error': 'Nombre requerido'}, status=400)
+    
+    familia = Familia.objects.create(nombre=nombre)
+    return JsonResponse({
+        'id': familia.id,
+        'nombre': familia.nombre,
+        'success': True
+    })
+
+@login_required
+@require_POST
+def ajax_add_especie(request):
+    nombre = request.POST.get('nombre')
+    familia_id = request.POST.get('familia_id')
+    
+    if not nombre or not familia_id:
+        return JsonResponse({'error': 'Nombre y familia requeridos'}, status=400)
+    
+    try:
+        especie = Especie.objects.create(
+            nombre=nombre,
+            familia_id=familia_id
+        )
+        return JsonResponse({
+            'id': especie.id,
+            'nombre': especie.nombre,
+            'familia_id': especie.familia_id,
+            'success': True
+        })
+    except Familia.DoesNotExist:
+        return JsonResponse({'error': 'Familia no encontrada'}, status=400)
+    
+

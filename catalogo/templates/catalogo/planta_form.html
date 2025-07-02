@@ -28,16 +28,28 @@
                             <div class="mb-3">
                                 <label for="{{ form.nombre_cientifico.id_for_label }}" class="form-label fw-bold">Nombre
                                     Científico</label>
-                                {{ form.nombre_cientifico }}
+                                {% render_field form.nombre_cientifico class="form-control" %}
                                 {% if form.nombre_cientifico.errors %}
                                 <div class="text-danger">{{ form.nombre_cientifico.errors }}</div>
                                 {% endif %}
                             </div>
-
+                            <div class="mb-3">
+                                <label for="{{ form.imagen.id_for_label }}" class="form-label fw-bold">Imagen</label>
+                                {% render_field form.imagen class="form-control" %}
+                                <small class="text-muted">Formatos soportados: JPG, PNG, GIF</small>
+                                {% if form.imagen.errors %}
+                                <div class="alert alert-danger mt-2">
+                                    {% for error in form.imagen.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                <small class="text-muted">Formatos soportados: JPG, PNG, GIF</small>
+                            </div>
                             <div class="mb-3">
                                 <label for="{{ form.nombre_comun.id_for_label }}" class="form-label fw-bold">Nombre
                                     Común</label>
-                                {{ form.nombre_comun }}
+                                {% render_field form.nombre_comun class="form-control" %}
                                 {% if form.nombre_comun.errors %}
                                 <div class="text-danger">{{ form.nombre_comun.errors }}</div>
                                 {% endif %}
@@ -46,13 +58,13 @@
                             <div class="mb-3">
                                 <label for="{{ form.fecha.id_for_label }}" class="form-label fw-bold">Fecha de
                                     Recolección</label>
-                                {{ form.fecha }}
+                                {% render_field form.fecha class="form-control" %}
                             </div>
 
                             <div class="mb-3">
                                 <label for="{{ form.numero_recolecta.id_for_label }}" class="form-label fw-bold">Número
                                     de Recolecta</label>
-                                {{ form.numero_recolecta }}
+                                {% render_field form.numero_recolecta class="form-control" %}
                                 {% if form.numero_recolecta.errors %}
                                 <div class="text-danger">{{ form.numero_recolecta.errors }}</div>
                                 {% endif %}
@@ -62,12 +74,12 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="{{ form.colonia.id_for_label }}"
                                         class="form-label fw-bold">Colonia</label>
-                                    {{ form.colonia }}
+                                    {% render_field form.colonia class="form-control" %}
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="{{ form.localidad.id_for_label }}"
                                         class="form-label fw-bold">Localidad</label>
-                                    {{ form.localidad }}
+                                    {% render_field form.localidad class="form-control" %}
                                 </div>
                             </div>
 
@@ -75,48 +87,61 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="{{ form.latitud.id_for_label }}"
                                         class="form-label fw-bold">Latitud</label>
-                                    {{ form.latitud }}
+                                    {% render_field form.latitud class="form-control" %}
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="{{ form.longitud.id_for_label }}"
                                         class="form-label fw-bold">Longitud</label>
-                                    {{ form.longitud }}
+                                    {% render_field form.longitud class="form-control" %}
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="{{ form.descripcion.id_for_label }}"
                                     class="form-label fw-bold">Descripción</label>
-                                {{ form.descripcion }}
+                                {% render_field form.descripcion class="form-control" %}
                             </div>
 
                             <div class="mb-3">
                                 <label for="{{ form.nombre_colector.id_for_label }}" class="form-label fw-bold">Nombre
                                     del Recolector</label>
-                                {{ form.nombre_colector }}
+                                {% render_field form.nombre_colector class="form-control" %}
+
                             </div>
+
+
 
                             <div class="row g-2">
                                 <div class="col-md-6 mb-3">
                                     <label for="id_familia" class="form-label fw-bold">Familia</label>
-                                    {{ form.familia }}
+                                    {% render_field form.familia class="form-select" %}
                                     {% if form.familia.errors %}
-                                    <div class="text-danger">{{ form.familia.errors }}</div>
+                                    <div class="alert alert-danger mt-2">
+                                        {% for error in form.familia.errors %}
+                                        {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                    {% if object and object.familia %}
+                                    <small class="text-muted">Familia actual: {{ object.familia.nombre }}</small>
                                     {% endif %}
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="id_especie" class="form-label fw-bold">Especie</label>
-                                    {{ form.especie }}
+                                    {% render_field form.especie class="form-select" %}
                                     {% if form.especie.errors %}
-                                    <div class="text-danger">{{ form.especie.errors }}</div>
-                                    {% endif %}
+                                    <div class="alert alert-danger mt-2">
+                                        {% for error in form.especie.errors %}
+                                        {{ error }}
+                                        {% endfor %}
+                                    </div> {% endif %}
                                 </div>
                             </div>
 
                             <div class="row g-2">
                                 <div class="col-md-6 mb-3">
                                     <label for="id_especie" class="form-label fw-bold">Municipio</label>
-                                    {{ form.municipio }}
+                                    {% render_field form.municipio class="form-control" %}
                                     {% if form.municipio.errors %}
                                     <div class="text-danger">{{ form.municipio.errors }}</div>
                                     {% endif %}
@@ -148,18 +173,12 @@
                                 src="{% if form.imagen.value %}{{ form.imagen.value.url }}{% else %}{% static 'img/placeholder.jpeg' %}{% endif %}"
                                 class="img-fluid mb-3" style="max-height: 300px;">
 
-                            {{ form.imagen }}
-                            {% if form.imagen.errors %}
-                            <div class="text-danger">{{ form.imagen.errors }}</div>
-                            {% endif %}
-
-                            <!-- Campo oculto para mantener la referencia a la imagen existente -->
-                            {% if form.imagen.value %}
-                            <input type="hidden" name="imagen-clear" id="imagen-clear-id" value="">
-                            {% endif %}
                         </div>
+
+
                     </div>
                 </div>
+
 
                 <div class="card shadow-sm">
                     <div class="card-body">
@@ -182,52 +201,15 @@
 {% endblock %}
 
 {% block extra_js %}
-<!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-    // Evitar duplicados
     document.addEventListener('DOMContentLoaded', function () {
-        document.querySelector('form').addEventListener('submit', function () {
-            const submitBtn = this.querySelector('button[type="submit"]');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
-        });
-
-        //prueba inicia guardado de imagen
-        document.getElementById('id_imagen').addEventListener('change', function (e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (event) {
-                    document.getElementById('imagePreview').src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        //termina prueba
-
-        // Vista previa de imagen
-
-        // Vista previa de imagen
-
+        const form = document.getElementById('muestraForm');
+        const imageInput = document.getElementById('id_imagen');
         const imagePreview = document.getElementById('imagePreview');
-        const imagenClear = document.getElementById('imagen-clear-id');
+        const submitBtn = document.getElementById('submitBtn');
 
-        // Mantener la imagen después de recarga por validación
-        if (imageInput.files && imageInput.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                imagePreview.src = e.target.result;
-            };
-            reader.readAsDataURL(imageInput.files[0]);
-        }
-
-        // Manejar cambio de imagen
+        // Vista previa de imagen
         imageInput.addEventListener('change', function (e) {
             if (this.files && this.files[0]) {
                 const reader = new FileReader();
@@ -235,150 +217,54 @@
                     imagePreview.src = event.target.result;
                 };
                 reader.readAsDataURL(this.files[0]);
-
-                // Si hay una imagen existente, marcar para no borrarla
-                if (imagenClear) {
-                    imagenClear.value = 'false';
-                }
-            } else {
-                imagePreview.src = "{% static 'img/placeholder.jpeg' %}";
             }
         });
 
-        // Prevenir envío si no hay imagen
-        document.querySelector('form').addEventListener('submit', function () {
-            const submitBtn = this.querySelector('button[type="submit"]');
+        // Deshabilitar botón al enviar
+        form.addEventListener('submit', function () {
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
-        })
-    });
-
-    // Mapa Leaflet
-    // Mapa Leaflet - Versión mejorada
-    document.addEventListener('DOMContentLoaded', function () {
-        // Verificar que Leaflet esté cargado
-        if (typeof L === 'undefined') {
-            console.error('Leaflet no está cargado correctamente');
-            return;
-        }
-
-        // Elementos del DOM
-        const mapElement = document.getElementById('map');
-        const latInput = document.getElementById('id_latitud');
-        const lngInput = document.getElementById('id_longitud');
-        const locateBtn = document.getElementById('locateBtn');
-        const resetMapBtn = document.getElementById('resetMapBtn');
-
-        // Coordenadas iniciales (México City como fallback)
-        const defaultLat = 19.4326;
-        const defaultLng = -99.1332;
-
-        // Obtener valores iniciales del formulario o usar defaults
-        let initialLat = defaultLat;
-        let initialLng = defaultLng;
-
-        if (latInput && latInput.value) initialLat = parseFloat(latInput.value);
-        if (lngInput && lngInput.value) initialLng = parseFloat(lngInput.value);
-
-        // Inicializar el mapa
-        const map = L.map('map').setView([initialLat, initialLng], 13);
-
-        // Añadir capa base
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        // Crear un marcador (inicialmente oculto)
-        let marker = null;
-
-        // Si hay coordenadas en el formulario, mostrar marcador
-        if (latInput.value && lngInput.value) {
-            marker = L.marker([initialLat, initialLng]).addTo(map)
-                .bindPopup('Ubicación actual');
-        }
-
-        // Función para actualizar las coordenadas en el formulario
-        function updateFormFields(lat, lng) {
-            if (latInput) latInput.value = lat;
-            if (lngInput) lngInput.value = lng;
-        }
-
-        // Manejador de clic en el mapa
-        function onMapClick(e) {
-            const { lat, lng } = e.latlng;
-
-            // Actualizar o crear el marcador
-            if (marker) {
-                marker.setLatLng([lat, lng]);
-            } else {
-                marker = L.marker([lat, lng]).addTo(map)
-                    .bindPopup('Ubicación seleccionada');
-            }
-
-            // Actualizar campos del formulario
-            updateFormFields(lat, lng);
-        }
-
-        // Evento de clic en el mapa
-        map.on('click', onMapClick);
-
-        // Botón para geolocalización
-        locateBtn.addEventListener('click', function () {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function (position) {
-                        const { latitude, longitude } = position.coords;
-                        map.setView([latitude, longitude], 15);
-
-                        // Crear o mover marcador
-                        if (marker) {
-                            marker.setLatLng([latitude, longitude]);
-                        } else {
-                            marker = L.marker([latitude, longitude]).addTo(map)
-                                .bindPopup('Tu ubicación actual');
-                        }
-
-                        // Actualizar campos del formulario
-                        updateFormFields(latitude, longitude);
-                    },
-                    function (error) {
-                        console.error("Error en geolocalización: ", error);
-                        alert("No se pudo obtener tu ubicación. Error: " + error.message);
-                    }
-                );
-            } else {
-                alert("Tu navegador no soporta geolocalización");
-            }
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Guardando...';
         });
 
-        // Botón para reiniciar el mapa
-        resetMapBtn.addEventListener('click', function () {
-            map.setView([defaultLat, defaultLng], 13);
-            if (marker) {
-                map.removeLayer(marker);
-                marker = null;
-            }
-            updateFormFields('', '');
-        });
+        // Manejo de familia y especie
+        const familiaSelect = document.getElementById('id_familia');
+        const especieSelect = document.getElementById('id_especie');
 
-        // Sincronizar cambios en los campos con el mapa
-        if (latInput && lngInput) {
-            [latInput, lngInput].forEach(input => {
-                input.addEventListener('change', function () {
-                    const lat = parseFloat(latInput.value) || defaultLat;
-                    const lng = parseFloat(lngInput.value) || defaultLng;
-
-                    map.setView([lat, lng], 13);
-
-                    if (marker) {
-                        marker.setLatLng([lat, lng]);
-                    } else if (latInput.value && lngInput.value) {
-                        marker = L.marker([lat, lng]).addTo(map)
-                            .bindPopup('Ubicación actual');
-                    }
-                });
+        if (familiaSelect && especieSelect) {
+            // Cargar especies cuando cambia la familia
+            familiaSelect.addEventListener('change', function () {
+                const familiaId = this.value;
+                if (familiaId) {
+                    fetch(`/catalogo/ajax/load-especies/?familia_id=${familiaId}`)
+                        .then(response => response.text())
+                        .then(html => {
+                            especieSelect.innerHTML = html;
+                            if (especieSelect.dataset.currentValue) {
+                                const currentValue = especieSelect.dataset.currentValue;
+                                Array.from(especieSelect.options).forEach(option => {
+                                    if (option.value === currentValue) {
+                                        option.selected = true;
+                                    }
+                                });
+                            }
+                        });
+                } else {
+                    especieSelect.innerHTML = '<option value="">---------</option>';
+                }
             });
+
+            // Si estamos editando y hay una familia seleccionada, cargar sus especies
+            if (especieSelect.value) {
+                especieSelect.dataset.currentValue = especieSelect.value;
+            }
+
+            // Disparar el cambio si hay una familia seleccionada
+            if (familiaSelect.value) {
+                familiaSelect.dispatchEvent(new Event('change'));
+            }
         }
+
     });
+
 </script>
 {% endblock %}

@@ -40,9 +40,9 @@ class AlgaCreateView(MuestraCreateView):
 
     def form_valid(self, form):
          # Verificar que se haya subido una imagen
-        if 'imagen' not in self.request.FILES:
-            form.add_error('imagen', 'Debe subir una imagen de la muestra')
-            return self.form_invalid(form)
+        # if 'imagen' not in self.request.FILES:
+        #     form.add_error('imagen', 'Debe subir una imagen de la muestra')
+        #     return self.form_invalid(form)
             
         
         # Asigna automáticamente la familia desde la especie si es necesario
@@ -106,12 +106,32 @@ class AlgaDetailView(MuestraDetailView):
 class AlgaUpdateView(MuestraUpdateView):
     """Vista para editar plantas"""
     template_name = 'catalogo/alga_form.html'
-    tipo_fijo = 'ALGA'
+    form_class = AlgaForm
+    # tipo_fijo = 'ALGA'
     success_url = reverse_lazy('catalogo:alga-list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['tipo_muestra'] = 'ALGA'
+        return kwargs
+
+        # Asegúrate de pasar la instancia existente al formulario
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'titulo_pagina': f"Editar {self.object.nombre_cientifico}",
+            'es_alga': True,
+        })
+        return context
+        
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo_pagina'] = f"Editar {self.object.nombre_cientifico}"
+        context.update({
+            'titulo_pagina': f"Editar {self.object.nombre_cientifico}",
+            'es_alga': True,
+            'subtitulo': "Editar los datos de la alga"
+        })
         return context
 
 

@@ -6,6 +6,8 @@ from crispy_forms.layout import Layout, Submit
 
 class AlgaForm(MuestraBiologicaForm):
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        tipo_muestra = kwargs.pop('tipo_muestra', None)
         super().__init__(*args, **kwargs)
     # Campo imagen personalizado
 
@@ -16,17 +18,56 @@ class AlgaForm(MuestraBiologicaForm):
             'id': 'id_imagen'
         })
         self.fields['imagen'].required = True
+
+        # Manejo de la familia y especie para casos de edición
+        if self.instance.pk:  # Si es una edición
+            # Si tiene especie, establece la familia y el queryset de especies
+            if self.instance.especie:
+                self.fields['familia'].initial = self.instance.especie.familia_id
+                self.fields['especie'].queryset = Especie.objects.filter(
+                    familia_id=self.instance.especie.familia_id
+                ).order_by('nombre')
+            # Si no tiene especie pero sí tiene familia directa
+            elif self.instance.familia:
+                self.fields['familia'].initial = self.instance.familia_id
+                self.fields['especie'].queryset = Especie.objects.filter(
+                    familia_id=self.instance.familia_id
+                ).order_by('nombre')
+        
+        # Manejo de POST (cuando se envía el formulario)
+        if 'familia' in self.data:
+            try:
+                familia_id = int(self.data.get('familia'))
+                self.fields['especie'].queryset = Especie.objects.filter(
+                    familia_id=familia_id
+                ).order_by('nombre')
+            except (ValueError, TypeError):
+                pass
+        
+        # Configuración de HTMX para la funcionalidad dinámica
+        self.fields['familia'].widget.attrs.update({
+            'hx-get': '/catalogo/ajax/load-especies/',
+            'hx-target': '#id_especie',
+            'hx-trigger': 'change',
+            'hx-swap': 'innerHTML',
+            'hx-vals': '{"familia_id": this.value}'
+        })
+
     def save(self, commit=True):
         instance = super().save(commit=False)
         
         # Asigna automáticamente la familia desde la especie si existe
         if self.cleaned_data.get('especie'):
             instance.familia = self.cleaned_data['especie'].familia
+        # Si no hay especie pero sí se seleccionó familia directamente
+        elif self.cleaned_data.get('familia'):
+            instance.familia = self.cleaned_data['familia']
         
         if commit:
             instance.save()
         
-        return instance    
+        return instance
+   
     
 
     # Campo familia (solo una definición)
@@ -104,34 +145,7 @@ class AlgaForm(MuestraBiologicaForm):
             # No definimos 'imagen' aquí porque ya está definido arriba
         }
 
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
-        tipo_muestra = kwargs.pop('tipo_muestra', None)
-        super().__init__(*args, **kwargs)      
-        
-        # Manejo seguro de familia y especie
-        if 'familia' in self.data:
-            try:
-                familia_id = int(self.data.get('familia'))
-                self.fields['especie'].queryset = Especie.objects.filter(
-                    familia_id=familia_id
-                ).order_by('nombre')
-            except (ValueError, TypeError):
-                pass
-        # Si es una instancia existente (edición)
-        elif self.instance.pk and self.instance.especie:
-            self.fields['especie'].queryset = Especie.objects.filter(
-                familia=self.instance.especie.familia
-            )
-            
-        # Configurar HTMX para mantener la funcionalidad dinámica
-        self.fields['familia'].widget.attrs.update({
-            'hx-get': '/catalogo/ajax/load-especies/',
-            'hx-target': '#id_especie',
-            'hx-trigger': 'change',
-            'hx-swap': 'innerHTML',
-            'hx-vals': '{familia_id: this.value}'
-        })
+    
 
     def clean(self):
         cleaned_data = super().clean()

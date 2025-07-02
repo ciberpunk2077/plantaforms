@@ -1,4 +1,5 @@
 from django.urls import path
+from .views import ajax_add_familia, ajax_add_especie
 from .views.planta import (
     PlantaCreateView, 
     PlantaListView, 
@@ -6,6 +7,10 @@ from .views.planta import (
     PlantaUpdateView,
     PlantaDeleteView, load_especies,)
 from .views.alga import *
+from .views.fruto import *
+from .views.polen import *
+from .views.helecho import *
+from .views.hongo import *
 from .views.familia import (  # Cambia este import
     FamiliaCreateView, FamiliaUpdateView, FamiliaListView,
     EspecieCreateView, EspecieUpdateView, EspecieListView
@@ -45,7 +50,37 @@ urlpatterns = [
     path('plantas/<int:pk>/editar/', PlantaUpdateView.as_view(), name='planta-update'),
     path('plantas/<int:pk>/eliminar/', PlantaDeleteView.as_view(), name='planta-delete'),
 
+    # URLs frutos y semillas
+    path('frutosemilla/', FrutoListView.as_view(), name='fruto-list'),
+    path('frutosemilla/nueva/', FrutoCreateView.as_view(), name='fruto-create'),
+    path('frutosemilla/<int:pk>/', FrutoDetailView.as_view(), name='fruto-detail'),
+    path('frutosemilla/<int:pk>/editar/', FrutoUpdateView.as_view(), name='fruto-update'),
+    path('frutosemilla/<int:pk>/eliminar/', FrutoDeleteView.as_view(), name='fruto-delete'),
+
+# URLs polen
+    path('polen/', PolenListView.as_view(), name='polen-list'),
+    path('polen/nueva/', PolenCreateView.as_view(), name='polen-create'),
+    path('polen/<int:pk>/', PolenDetailView.as_view(), name='polen-detail'),
+    path('polen/<int:pk>/editar/', PolenUpdateView.as_view(), name='polen-update'),
+    path('polen/<int:pk>/eliminar/', PolenDeleteView.as_view(), name='polen-delete'),
+
+# URLs helecho
+    path('helecho/', HelechoListView.as_view(), name='helecho-list'),
+    path('helecho/nueva/', HelechoCreateView.as_view(), name='helecho-create'),
+    path('helecho/<int:pk>/', HelechoDetailView.as_view(), name='helecho-detail'),
+    path('helecho/<int:pk>/editar/', HelechoUpdateView.as_view(), name='helecho-update'),
+    path('helecho/<int:pk>/eliminar/', HelechoDeleteView.as_view(), name='helecho-delete'),
+
+# URLs hongo
+    path('hongo/', HongoListView.as_view(), name='hongo-list'),
+    path('hongo/nueva/', HongoCreateView.as_view(), name='hongo-create'),
+    path('hongo/<int:pk>/', HongoDetailView.as_view(), name='hongo-detail'),
+    path('hongo/<int:pk>/editar/', HongoUpdateView.as_view(), name='hongo-update'),
+    path('hongo/<int:pk>/eliminar/', HongoDeleteView.as_view(), name='hongo-delete'),
+
     #URLs especie
+    path('api/add-familia/', ajax_add_familia, name='ajax-add-familia'),
+    path('api/add-especie/', ajax_add_especie, name='ajax-add-especie'),
     path('ajax/load-especies/', load_especies, name='ajax_load_especies'),
     
     # URLs generales para muestras (opcional mantenerlas)

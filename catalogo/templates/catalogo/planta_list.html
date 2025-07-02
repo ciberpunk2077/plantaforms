@@ -3,13 +3,7 @@
 
 {% block extra_css %}
 <style>
-    .img-tabla {
-        width: 10px;
-        height: 10px;
-        object-fit: cover;
-        border-radius: 4px;
 
-    }
 </style>
 {% endblock %}
 
@@ -33,9 +27,10 @@
                         <thead>
                             <tr>
                                 <th>Nombre Científico</th>
-                                <th>Nombre Común</th>
+                                <th>Nombre Comun</th>
+
                                 <th>Familia</th>
-                                <th>Fecha Recolección</th>
+
                                 <th>Imagen</th>
                                 <th>Acciones</th>
                             </tr>
@@ -44,13 +39,18 @@
                             {% for planta in object_list %}
                             <tr>
                                 <td>{{ planta.nombre_cientifico }}</td>
-                                <td>{{ planta.nombre_comun|default:"-" }}</td>
-                                <td>{{ planta.familia.nombre|default:"-" }}</td>
-                                <td>{{ planta.fecha|date:"d/m/Y"|default:"-" }}</td>
+                                <td>{{ planta.nombre_comun }}</td>
+
+                                <td>{{ planta.especie.familia.nombre|default:"-" }}
+                                </td>
+
                                 <td>
                                     {% if planta.imagen %}
-                                    <img src="{{ planta.imagen.url }}" class="img-tabla"
-                                        alt="{{ planta.nombre_cientifico }}">
+                                    <div class="img-tabla-container">
+                                        <img src="{{ planta.imagen.url }}" class="img-tabla"
+                                            alt="{{ planta.nombre_cientifico }}"
+                                            style="width: 80px; height: 80px; object-fit: cover;">
+                                    </div>
                                     {% else %}
                                     <span class="text-muted">-</span>
                                     {% endif %}
@@ -64,6 +64,11 @@
                                         <a href="{% url 'catalogo:planta-update' planta.pk %}"
                                             class="btn btn-sm btn-warning" title="Editar">
                                             <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'catalogo:planta-delete' planta.pk %}"
+                                            class="btn btn-sm btn-danger" title="Eliminar">
+
+                                            <i class="bi bi-trash"></i>
                                         </a>
                                     </div>
                                 </td>
@@ -99,7 +104,7 @@
 
                 {% else %}
                 <div class="alert alert-info">
-                    No hay plantas registradas aún.
+                    No hay planta registradas aún.
                     <a href="{% url 'catalogo:planta-create' %}" class="alert-link">
                         ¿Deseas agregar la primera?
                     </a>
