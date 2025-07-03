@@ -114,7 +114,13 @@
                             <div class="row g-2">
                                 <div class="col-md-6 mb-3">
                                     <label for="id_familia" class="form-label fw-bold">Familia</label>
-                                    {% render_field form.familia class="form-select" %}
+                                    <div class="input-group">
+                                        {% render_field form.familia class="form-select" %}
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                                            data-bs-target="#addFamiliaModal">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
                                     {% if form.familia.errors %}
                                     <div class="alert alert-danger mt-2">
                                         {% for error in form.familia.errors %}
@@ -128,13 +134,20 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="id_especie" class="form-label fw-bold">Especie</label>
-                                    {% render_field form.especie class="form-select" %}
+                                    <div class="input-group">
+                                        {% render_field form.especie class="form-select" %}
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                                            data-bs-target="#addEspecieModal">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
                                     {% if form.especie.errors %}
                                     <div class="alert alert-danger mt-2">
                                         {% for error in form.especie.errors %}
                                         {{ error }}
                                         {% endfor %}
-                                    </div> {% endif %}
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
 
@@ -197,74 +210,7 @@
             </div>
         </div>
     </div>
+    {% include 'catalogo/modal_familia.html' %}
+    {% include 'catalogo/modal_especie.html' %}
 </main>
-{% endblock %}
-
-{% block extra_js %}
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const form = document.getElementById('muestraForm');
-        const imageInput = document.getElementById('id_imagen');
-        const imagePreview = document.getElementById('imagePreview');
-        const submitBtn = document.getElementById('submitBtn');
-
-        // Vista previa de imagen
-        imageInput.addEventListener('change', function (e) {
-            if (this.files && this.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function (event) {
-                    imagePreview.src = event.target.result;
-                };
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-
-        // Deshabilitar botón al enviar
-        form.addEventListener('submit', function () {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Guardando...';
-        });
-
-        // Manejo de familia y especie
-        const familiaSelect = document.getElementById('id_familia');
-        const especieSelect = document.getElementById('id_especie');
-
-        if (familiaSelect && especieSelect) {
-            // Cargar especies cuando cambia la familia
-            familiaSelect.addEventListener('change', function () {
-                const familiaId = this.value;
-                if (familiaId) {
-                    fetch(`/catalogo/ajax/load-especies/?familia_id=${familiaId}`)
-                        .then(response => response.text())
-                        .then(html => {
-                            especieSelect.innerHTML = html;
-                            if (especieSelect.dataset.currentValue) {
-                                const currentValue = especieSelect.dataset.currentValue;
-                                Array.from(especieSelect.options).forEach(option => {
-                                    if (option.value === currentValue) {
-                                        option.selected = true;
-                                    }
-                                });
-                            }
-                        });
-                } else {
-                    especieSelect.innerHTML = '<option value="">---------</option>';
-                }
-            });
-
-            // Si estamos editando y hay una familia seleccionada, cargar sus especies
-            if (especieSelect.value) {
-                especieSelect.dataset.currentValue = especieSelect.value;
-            }
-
-            // Disparar el cambio si hay una familia seleccionada
-            if (familiaSelect.value) {
-                familiaSelect.dispatchEvent(new Event('change'));
-            }
-        }
-
-    });
-
-</script>
 {% endblock %}

@@ -107,9 +107,8 @@ class FrutoForm(MuestraBiologicaForm):
     
     class Meta(MuestraBiologicaForm.Meta):
         fields = [
-            'tipo_muestra', 'nombre_cientifico', 'nombre_comun', 'familia', 'especie',
-            'genero', 'fecha', 'numero_recolecta', 'municipio',  'imagen', 'colonia', 
-            'localidad', 'descripcion', 'nombre_colector','latitud', 'longitud'
+            'tipo_muestra', 'nombre_cientifico', 'nombre_comun', 'genero', 'fecha', 'numero_recolecta', 'municipio',  'imagen', 'colonia', 
+            'localidad', 'descripcion', 'nombre_colector','latitud', 'longitud', 'especie'
         ]
         widgets = {
             'tipo_muestra': forms.HiddenInput(),

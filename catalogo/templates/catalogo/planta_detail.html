@@ -1,12 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block extra_css %}
-<style>
-
-</style>
-{% endblock %}
-
 {% block content %}
 <main class="main-content" id="mainContent" style="margin-top: 70px;">
     <div class="container">
@@ -153,23 +147,5 @@
 
     </div>
 </main>
-<style>
-    .map-container {
-        border-radius: 0 0 0.25rem 0.25rem;
-        overflow: hidden;
-    }
 
-    th {
-        font-weight: 500;
-        color: #495057;
-    }
-
-    .card-header {
-        border-radius: 0.25rem 0.25rem 0 0 !important;
-    }
-
-    .table-striped tbody tr:nth-of-type(odd) {
-        background-color: rgba(0, 0, 0, 0.02);
-    }
-</style>
 {% endblock %}

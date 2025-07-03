@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ajax_add_familia, ajax_add_especie
+
 from .views.planta import (
     PlantaCreateView, 
     PlantaListView, 
@@ -13,7 +13,7 @@ from .views.helecho import *
 from .views.hongo import *
 from .views.familia import (  # Cambia este import
     FamiliaCreateView, FamiliaUpdateView, FamiliaListView,
-    EspecieCreateView, EspecieUpdateView, EspecieListView
+    EspecieCreateView, EspecieUpdateView, EspecieListView, ajax_add_familia, ajax_add_especie
 )
 from .views.muestra import MuestraListView
 from catalogo.views.buscar import buscar_muestras, get_especies
@@ -79,8 +79,8 @@ urlpatterns = [
     path('hongo/<int:pk>/eliminar/', HongoDeleteView.as_view(), name='hongo-delete'),
 
     #URLs especie
-    path('api/add-familia/', ajax_add_familia, name='ajax-add-familia'),
-    path('api/add-especie/', ajax_add_especie, name='ajax-add-especie'),
+    path('ajax/add-familia/', ajax_add_familia, name='ajax-add-familia'),
+    path('ajax/add-especie/', ajax_add_especie, name='ajax-add-especie'),
     path('ajax/load-especies/', load_especies, name='ajax_load_especies'),
     
     # URLs generales para muestras (opcional mantenerlas)

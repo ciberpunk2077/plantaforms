@@ -90,6 +90,7 @@ class AlgaForm(MuestraBiologicaForm):
         widget=forms.Select(attrs={
             'class': 'form-select',
             'id': 'id_especie',
+            'required': 'required',
         }),
         empty_label="Seleccione una especie"
     )
@@ -107,9 +108,9 @@ class AlgaForm(MuestraBiologicaForm):
     
     class Meta(MuestraBiologicaForm.Meta):
         fields = [
-            'tipo_muestra', 'nombre_cientifico', 'nombre_comun', 'familia', 'especie',
+            'tipo_muestra', 'nombre_cientifico', 'nombre_comun', 
             'genero', 'fecha', 'numero_recolecta', 'municipio',  'imagen', 'colonia', 
-            'localidad', 'descripcion', 'nombre_colector','latitud', 'longitud'
+            'localidad', 'descripcion', 'nombre_colector','latitud', 'longitud', 'especie'
         ]
         widgets = {
             'tipo_muestra': forms.HiddenInput(),

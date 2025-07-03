@@ -1,0 +1,17 @@
+.map-container {
+    border-radius: 0 0 0.25rem 0.25rem;
+    overflow: hidden;
+}
+
+th {
+    font-weight: 500;
+    color: #495057;
+}
+
+.card-header {
+    border-radius: 0.25rem 0.25rem 0 0 !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
